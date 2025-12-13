@@ -23,7 +23,70 @@ class PembayaranResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('pesanan_id')
+                    ->label('Pesanan')
+                    ->relationship('pesanan', 'kode_pesanan')
+                    ->required()
+                    ->searchable()
+                    ->preload()
+                    ->disabled(fn ($context) => $context === 'edit')
+                    ->dehydrated(),
+
+                Forms\Components\DatePicker::make('tanggal_pembayaran')
+                    ->label('Tanggal Pembayaran')
+                    ->required()
+                    ->default(now()),
+
+                Forms\Components\TextInput::make('jumlah_dibayar')
+                    ->label('Jumlah Dibayar')
+                    ->numeric()
+                    ->prefix('Rp')
+                    ->required()
+                    ->minValue(0),
+
+                Forms\Components\Select::make('metode_pembayaran')
+                    ->label('Metode Pembayaran')
+                    ->options([
+                        'cash' => 'Cash',
+                        'transfer' => 'Transfer',
+                        'ewallet' => 'E-Wallet',
+                        'qris' => 'QRIS',
+                        'debit' => 'Debit',
+                        'credit' => 'Credit',
+                    ])
+                    ->default('transfer')
+                    ->required(),
+
+                Forms\Components\Select::make('status_pembayaran')
+                    ->label('Status Pembayaran')
+                    ->options([
+                        'pending' => 'Pending',
+                        'partial' => 'Partial',
+                        'paid' => 'Paid',
+                        'refund' => 'Refund',
+                    ])
+                    ->default('pending')
+                    ->required()
+                    ->disabled(fn ($context) => $context === 'create'),
+
+                Forms\Components\FileUpload::make('bukti_pembayaran')
+                    ->label('Bukti Pembayaran')
+                    ->image()
+                    ->directory('bukti-pembayaran')
+                    ->imageEditor()
+                    ->maxSize(5120)
+                    ->helperText('Upload bukti pembayaran (maks 5MB)')
+                    ->columnSpanFull(),
+
+                Forms\Components\TextInput::make('nomor_referensi')
+                    ->label('Nomor Referensi')
+                    ->maxLength(255)
+                    ->helperText('Nomor referensi transaksi (opsional)'),
+
+                Forms\Components\Textarea::make('catatan')
+                    ->label('Catatan')
+                    ->maxLength(65535)
+                    ->columnSpanFull(),
             ]);
     }
 

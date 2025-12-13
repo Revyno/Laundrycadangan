@@ -14,7 +14,7 @@ class Jenis_Sepatu extends Model
     protected $table = 'jenis_sepatus';
 
     protected $fillable = [
-        
+
         'nama_jenis',
         'merek',
         'bahan',
@@ -29,7 +29,7 @@ class Jenis_Sepatu extends Model
     // Relationships
     public function detailPesanans(): HasMany
     {
-        return $this->hasMany(Detail_Pesanan::class);
+        return $this->hasMany(Detail_Pesanan::class, 'jenis_sepatu_id');
     }
 
     // Scope aktif

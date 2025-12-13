@@ -16,4 +16,27 @@ class EditPesanan extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        // Calculate total_harga from detail_pesanans
+        $total = 0;
+        if (isset($data['detail_pesanans']) && is_array($data['detail_pesanans'])) {
+            foreach ($data['detail_pesanans'] as $detail) {
+                $total += $detail['subtotal'] ?? 0;
+            }
+        }
+        $data['total_harga'] = $total;
+
+        return $data;
+    }
+
+    protected function afterSave(): void
+    {
+        // Recalculate total to ensure accuracy
+        $total = $this->record->detailPesanans()->sum('subtotal');
+        if ($total > 0) {
+            $this->record->update(['total_harga' => $total]);
+        }
+    }
 }

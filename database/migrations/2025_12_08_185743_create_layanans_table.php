@@ -21,12 +21,12 @@ return new class extends Migration
                 'repaint',
                 'repair'
             ])->default('basic');
-            $table->decimal('harga_layanan', 10, 2);
+
+            // $table->decimal('harga_layanan', 10, 2); // DIHAPUS
             $table->text('deskripsi')->nullable();
-            $table->string('durasi');
+         
             $table->integer('durasi_hari')->default(1);
             $table->string('image')->nullable();
-            $table->json('fitur')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         // 1. Buat Admin (ganti 'super_admin' dengan 'admin')
         $admin = User::create([
             'name' => 'Super Admin',
-            'email' => 'admin@laundry.com',
+            'email' => 'x   ',
             'password' => Hash::make('password123'),
             'role' => 'admin', // UBAH INI dari 'super_admin' ke 'admin'
             'phone' => '081234567890',

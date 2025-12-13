@@ -41,8 +41,9 @@ class LaporanLaundrieResource extends Resource
             ->schema([
                 Forms\Components\Card::make()
                     ->schema([
-                        Forms\Components\Hidden::make('admin_id')
-                            ->default(Auth::id()),
+                        Forms\Components\Hidden::make('user_id')
+                            ->default(Auth::id())
+                            ->dehydrated(),
 
                         Forms\Components\DatePicker::make('periode_awal')
                             ->label('Periode Awal')
@@ -159,7 +160,7 @@ class LaporanLaundrieResource extends Resource
                     ->numeric()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('admin.name')
+                Tables\Columns\TextColumn::make('user.name')
                     ->label('Dibuat Oleh')
                     ->sortable(),
             ])
@@ -209,8 +210,12 @@ class LaporanLaundrieResource extends Resource
         // Hitung data dari database
         $pesanan = Pesanan::whereBetween('created_at', [$laporan->periode_awal, $laporan->periode_akhir])->get();
 
-        // Total pendapatan dari pesanan yang selesai
-        $totalPendapatan = $pesanan->whereIn('status', ['completed', 'delivered'])->sum('total_harga');
+        // Total pendapatan dari pembayaran yang sudah dikonfirmasi (status = 'paid')
+        $totalPendapatan = DB::table('pembayarans')
+            ->join('pesanans', 'pembayarans.pesanan_id', '=', 'pesanans.id')
+            ->where('pembayarans.status_pembayaran', 'paid')
+            ->whereBetween('pembayarans.tanggal_pembayaran', [$laporan->periode_awal, $laporan->periode_akhir])
+            ->sum('pembayarans.jumlah_dibayar');
 
         // Total pesanan
         $totalPesanan = $pesanan->count();
@@ -227,11 +232,13 @@ class LaporanLaundrieResource extends Resource
         // Pesanan batal
         $pesananBatal = $pesanan->where('status', 'cancelled')->count();
 
-        // Layanan terpopuler
+        // Layanan terpopuler (dari pesanan dengan pembayaran yang sudah dikonfirmasi)
         $layananTerpopuler = DB::table('detail_pesanans')
             ->join('layanans', 'detail_pesanans.layanan_id', '=', 'layanans.id')
             ->join('pesanans', 'detail_pesanans.pesanan_id', '=', 'pesanans.id')
-            ->whereBetween('pesanans.created_at', [$laporan->periode_awal, $laporan->periode_akhir])
+            ->join('pembayarans', 'pesanans.id', '=', 'pembayarans.pesanan_id')
+            ->where('pembayarans.status_pembayaran', 'paid')
+            ->whereBetween('pembayarans.tanggal_pembayaran', [$laporan->periode_awal, $laporan->periode_akhir])
             ->select(
                 'layanans.nama_layanan',
                 DB::raw('SUM(detail_pesanans.jumlah_pasang) as total_pasang'),

@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\LayananResource\Pages;
-use App\Filament\Resources\LayananResource\RelationManagers;
 use App\Models\Layanan;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class LayananResource extends Resource
@@ -42,59 +39,39 @@ class LayananResource extends Resource
                         Forms\Components\Select::make('kategori_layanan')
                             ->label('Kategori')
                             ->options([
-                                'basic' => 'Basic Clean',
-                                'premium' => 'Premium Clean',
-                                'deep' => 'Deep Clean',
-                                'unyellowing' => 'Unyellowing',
-                                'repaint' => 'Repaint',
-                                'repair' => 'Repair',
+                                'basic' => 'Basic Clean (Rp 50.000)',
+                                'premium' => 'Premium Clean (Rp 100.000)',
+                                'deep' => 'Deep Clean (Rp 150.000)',
+                                'unyellowing' => 'Unyellowing (Rp 75.000)',
+                                'repaint' => 'Repaint (Rp 200.000)',
+                                'repair' => 'Repair (Rp 250.000)',
                             ])
                             ->default('basic')
-                            ->required(),
-
-                        Forms\Components\TextInput::make('harga_layanan')
-                            ->label('Harga')
-                            ->numeric()
-                            ->prefix('Rp')
-                            ->required(),
+                            ->required()
+                            ->reactive()
+                            ->afterStateUpdated(function ($state, Forms\Set $set) {
+                                // Set durasi_hari otomatis berdasarkan kategori
+                                $durasiHari = Layanan::DURASI_HARI_KATEGORI[$state] ?? 1;
+                                $set('durasi_hari', $durasiHari);
+                            }),
 
                         Forms\Components\Textarea::make('deskripsi')
                             ->label('Deskripsi')
                             ->maxLength(65535)
                             ->columnSpanFull(),
-                    ]),
-
-                Forms\Components\Card::make()
-                    ->schema([
-                        Forms\Components\TextInput::make('durasi')
-                            ->label('Estimasi Waktu')
-                            ->required()
-                            ->maxLength(50),
 
                         Forms\Components\TextInput::make('durasi_hari')
                             ->label('Durasi (Hari)')
                             ->numeric()
                             ->default(1),
-
-                        Forms\Components\FileUpload::make('image')
-                            ->label('Gambar Layanan')
-                            ->image()
-                            ->directory('layanan-images')
-                            ->columnSpanFull(),
                     ])->columns(2),
 
-                Forms\Components\Card::make()
-                    ->schema([
-                        Forms\Components\Repeater::make('fitur')
-                            ->schema([
-                                Forms\Components\TextInput::make('nama')
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->placeholder('Nama fitur'),
-                            ])
-                            ->defaultItems(3)
-                            ->columnSpanFull(),
-                    ]),
+                Forms\Components\FileUpload::make('image')
+                    ->label('Gambar Layanan')
+                    ->image()
+                    ->directory('layanan-images')
+                    ->imageEditor()
+                    ->columnSpanFull(),
 
                 Forms\Components\Card::make()
                     ->schema([
@@ -121,6 +98,7 @@ class LayananResource extends Resource
 
                 Tables\Columns\BadgeColumn::make('kategori_layanan')
                     ->label('Kategori')
+                    ->formatStateUsing(fn ($record) => $record->getHargaLabelAttribute())
                     ->colors([
                         'gray' => 'basic',
                         'blue' => 'premium',
@@ -129,16 +107,22 @@ class LayananResource extends Resource
                         'purple' => 'repaint',
                         'red' => 'repair',
                     ])
-                    ->formatStateUsing(fn ($state) => ucfirst($state))
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('harga_layanan')
                     ->label('Harga')
-                    ->money('IDR')
+                    ->formatStateUsing(fn ($record) => $record->formatted_price)
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('durasi')
-                    ->label('Estimasi'),
+                Tables\Columns\TextColumn::make('durasi_hari')
+                    ->label('Durasi (Hari)')
+                    ->suffix(' hari')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('detail_pesanans_count')
+                    ->counts('detailPesanans')
+                    ->label('Jumlah Pesanan')
+                    ->sortable(),
 
                 Tables\Columns\BooleanColumn::make('is_active')
                     ->label('Aktif')
@@ -174,20 +158,12 @@ class LayananResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
-        'index' => Pages\ListLayanans::route('/'),
-        'create' => Pages\CreateLayanan::route('/create'),
-        // 'view' => Pages\ViewLayanan::route('/{record}'),
-        'edit' => Pages\EditLayanan::route('/{record}/edit'),
+            'index' => Pages\ListLayanans::route('/'),
+            'create' => Pages\CreateLayanan::route('/create'),
+            'edit' => Pages\EditLayanan::route('/{record}/edit'),
         ];
     }
 }

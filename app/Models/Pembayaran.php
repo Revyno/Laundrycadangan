@@ -20,7 +20,7 @@ class Pembayaran extends Model
         'status_pembayaran',
         'bukti_pembayaran',
         'nomor_referensi',
-        'admin_id',
+        'user_id',
         'catatan'
     ];
 
@@ -52,7 +52,7 @@ class Pembayaran extends Model
 
     public function admin(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'admin_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // Hitung kekurangan pembayaran

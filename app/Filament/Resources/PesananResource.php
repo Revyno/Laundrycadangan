@@ -1,16 +1,15 @@
 <?php
-// app/Filament/Customer/Resources/PesananResource.php
 
-namespace App\Filament\Customer\Resources;
+namespace App\Filament\Resources;
 
-use App\Filament\Customer\Resources\PesananResource\Pages;
+use App\Filament\Resources\PesananResource\Pages;
+use App\Filament\Resources\PesananResource\RelationManagers;
 use App\Models\Pesanan;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Auth;
 
 class PesananResource extends Resource
 {
@@ -18,20 +17,24 @@ class PesananResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
-    protected static ?string $navigationLabel = 'Pesanan Saya';
+    protected static ?string $navigationLabel = 'Pesanan';
 
     protected static ?string $modelLabel = 'Pesanan';
 
-    protected static ?string $pluralModelLabel = 'Pesanan Saya';
+    protected static ?string $pluralModelLabel = 'Pesanan';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Hidden::make('customer_id')
-                    ->default(Auth::id()),
+                Forms\Components\Select::make('customer_id')
+                    ->label('Customer')
+                    ->relationship('customer', 'name')
+                    ->required()
+                    ->searchable()
+                    ->preload(),
 
                 Forms\Components\DatePicker::make('tanggal_pesanan')
                     ->required()
@@ -45,7 +48,8 @@ class PesananResource extends Resource
                     ->numeric()
                     ->prefix('Rp')
                     ->required()
-                    ->label('Total Harga'),
+                    ->label('Total Harga')
+                    ->disabled(),
 
                 Forms\Components\Select::make('status')
                     ->options([
@@ -57,8 +61,7 @@ class PesananResource extends Resource
                         'cancelled' => 'Dibatalkan',
                     ])
                     ->default('pending')
-                    ->required()
-                    ->disabled(),
+                    ->required(),
 
                 Forms\Components\Select::make('metode_pengantaran')
                     ->label('Metode Pengantaran')
@@ -85,12 +88,16 @@ class PesananResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn ($query) => $query->where('customer_id', Auth::id()))
             ->columns([
                 Tables\Columns\TextColumn::make('kode_pesanan')
                     ->label('Kode Pesanan')
                     ->searchable()
                     ->copyable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('customer.name')
+                    ->label('Customer')
+                    ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('tanggal_pesanan')
@@ -116,14 +123,25 @@ class PesananResource extends Resource
                     ->formatStateUsing(fn ($state) => ucfirst(str_replace('_', ' ', $state)))
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('metode_pengantaran')
-                    ->label('Pengantaran')
+                Tables\Columns\TextColumn::make('detailPesanans.layanan.nama_layanan')
+                    ->label('Layanan')
                     ->badge()
-                    ->formatStateUsing(fn ($state) => ucfirst(str_replace('_', ' ', $state))),
+                    ->separator(','),
+
+                Tables\Columns\IconColumn::make('has_photos')
+                    ->label('Ada Foto')
+                    ->boolean()
+                    ->getStateUsing(fn (Pesanan $record) => $record->detailPesanans()->whereNotNull('foto_sebelum')->exists())
+                    ->trueIcon('heroicon-o-camera')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('gray')
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('detail_pesanans_count')
                     ->counts('detailPesanans')
-                    ->label('Jumlah Item'),
+                    ->label('Jumlah Item')
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('pembayaran.status_pembayaran')
                     ->label('Status Bayar')
@@ -148,46 +166,20 @@ class PesananResource extends Resource
                     ]),
             ])
             ->actions([
-                Tables\Actions\ActionGroup::make([
-                    Tables\Actions\ViewAction::make(),
-                    Tables\Actions\EditAction::make(),
-                    Tables\Actions\Action::make('bayar')
-                        ->label('Bayar')
-                        ->icon('heroicon-o-credit-card')
-                        ->color('success')
-                        ->url(fn (Pesanan $record) => route('filament.customer.pages.pembayaran', ['pesanan' => $record->id]))
-                        ->visible(fn (Pesanan $record) =>
-                            (!$record->pembayaran || $record->pembayaran->status_pembayaran !== 'paid') &&
-                            $record->status !== 'cancelled'
-                        ),
-
-                    Tables\Actions\Action::make('cancel')
-                        ->label('Batalkan')
-                        ->icon('heroicon-o-x-circle')
-                        ->color('danger')
-                        ->action(fn (Pesanan $record) => $record->update(['status' => 'cancelled']))
-                        ->requiresConfirmation()
-                        ->visible(fn (Pesanan $record) => $record->status === 'pending'),
-
-                    Tables\Actions\Action::make('invoice')
-                        ->icon('heroicon-o-printer')
-                        ->url(fn (Pesanan $record) => route('customer.pesanan.invoice', $record))
-                        ->openUrlInNewTab(),
-                ]),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
-            ->bulkActions([])
-            ->emptyStateActions([
-                \Filament\Tables\Actions\Action::make('create')
-                    ->label('Buat Pesanan Baru')
-                    ->url(route('filament.customer.resources.pesanans.create'))
-                    ->icon('heroicon-o-plus'),
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\DetailPesanansRelationManager::class,
         ];
     }
 
@@ -196,7 +188,6 @@ class PesananResource extends Resource
         return [
             'index' => Pages\ListPesanans::route('/'),
             'create' => Pages\CreatePesanan::route('/create'),
-            // 'view' => Pages\ViewPesanan::route('/{record}'),
             'edit' => Pages\EditPesanan::route('/{record}/edit'),
         ];
     }
