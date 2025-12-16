@@ -246,6 +246,12 @@ class PesananResource extends Resource
                     ->date()
                     ->sortable(),
 
+                Tables\Columns\TextColumn::make('tanggal_selesai')
+                    ->label('Estimasi Selesai')
+                    ->date()
+                    ->placeholder('Belum ditentukan')
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('total_harga')
                     ->label('Total')
                     ->money('IDR')
@@ -337,7 +343,7 @@ class PesananResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\DetailPesanansRelationManager::class,
         ];
     }
 
@@ -346,7 +352,7 @@ class PesananResource extends Resource
         return [
             'index' => Pages\ListPesanans::route('/'),
             'create' => Pages\CreatePesanan::route('/create'),
-            // 'view' => Pages\ViewPesanan::route('/{record}'),
+            'view' => Pages\ViewPesanan::route('/{record}'),
             'edit' => Pages\EditPesanan::route('/{record}/edit'),
         ];
     }

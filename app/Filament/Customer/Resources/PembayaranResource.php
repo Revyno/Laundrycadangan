@@ -19,6 +19,8 @@ class PembayaranResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
+  
+
     public static function form(Form $form): Form
     {
         return $form
@@ -153,6 +155,12 @@ class PembayaranResource extends Resource
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
+                    Tables\Actions\Action::make('print_invoice')
+                        ->label('Cetak Invoice')
+                        ->icon('heroicon-o-printer')
+                        ->color('success')
+                        ->url(fn (Pembayaran $record): string => Pages\PrintInvoice::getUrl(['record' => $record]))
+                        ->openUrlInNewTab(),
                     Tables\Actions\DeleteAction::make(),
                 ]),
             ])
@@ -172,6 +180,7 @@ class PembayaranResource extends Resource
             'index' => Pages\ListPembayarans::route('/'),
             'create' => Pages\CreatePembayaran::route('/create'),
             'edit' => Pages\EditPembayaran::route('/{record}/edit'),
+            'print-invoice' => Pages\PrintInvoice::route('/{record}/print-invoice'),
         ];
     }
 }
