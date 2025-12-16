@@ -23,6 +23,8 @@ class PesananResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Pesanan';
 
+    protected static ?string $navigationGroup = 'Master Data';
+
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form

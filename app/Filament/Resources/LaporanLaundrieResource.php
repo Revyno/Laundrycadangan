@@ -186,18 +186,24 @@ class LaporanLaundrieResource extends Resource
 
                     Tables\Actions\Action::make('generate')
                         ->label('Generate Laporan')
-                        ->icon('heroicon-o-refresh')
+                        ->icon('heroicon-o-arrow-path')
                         ->color('primary')
                         ->action(function (Laporan_laundrie $record) {
                             self::generateLaporanData($record);
                         }),
 
+                    // Tables\Actions\Action::make('print')
+                    //     ->label('Cetak')
+                    //     ->icon('heroicon-o-printer')
+                    //     ->color('gray')
+                    //     ->url(fn (Laporan_laundrie $record) => route('admin.laporan.print', $record))
+                    //     ->openUrlInNewTab(),
                     Tables\Actions\Action::make('print')
-                        ->label('Cetak')
-                        ->icon('heroicon-o-printer')
-                        ->color('gray')
-                        ->url(fn (Laporan_laundrie $record) => route('admin.laporan.print', $record))
-                        ->openUrlInNewTab(),
+                    ->label('Cetak')
+                    ->icon('heroicon-o-printer')
+                    ->color('gray')
+                    ->url(fn (Laporan_laundrie $record) => static::getUrl('print', ['record' => $record->id]))
+                    ->openUrlInNewTab(),
                 ]),
             ])
             ->bulkActions([
@@ -279,9 +285,14 @@ class LaporanLaundrieResource extends Resource
     public static function getPages(): array
     {
         return [
+            // 'index' => Pages\ListLaporanLaundries::route('/'),
+            // 'create' => Pages\CreateLaporanLaundrie::route('/create'),
+            // 'edit' => Pages\EditLaporanLaundrie::route('/{record}/edit'),
             'index' => Pages\ListLaporanLaundries::route('/'),
             'create' => Pages\CreateLaporanLaundrie::route('/create'),
             'edit' => Pages\EditLaporanLaundrie::route('/{record}/edit'),
+            'print' => Pages\PrintLaporan::route('/{record}/print'),
         ];
     }
+
 }

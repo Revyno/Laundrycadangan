@@ -90,4 +90,3 @@ class LayananPopulerStatsWidget extends BaseWidget
         return $chartData;
     }
 }
-

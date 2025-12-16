@@ -25,9 +25,9 @@
         <div>
             <h3 class="text-lg font-semibold mb-3">Foto Sebelum</h3>
             @if($record->foto_sebelum)
-                <div class="border rounded-lg p-4 bg-gray-50">
-                    <img src="{{ \Illuminate\Support\Facades\Storage::url($record->foto_sebelum) }}" 
-                         alt="Foto Sebelum" 
+                <div class="border rounded-lg p-4">
+                    <img src="{{\Storage::url($record->foto_sebelum) }}"
+                         alt="Foto Sebelum"
                          class="w-full h-auto rounded-lg shadow-md">
                 </div>
             @else
@@ -43,13 +43,13 @@
         <div>
             <h3 class="text-lg font-semibold mb-3">Foto Sesudah</h3>
             @if($record->foto_sesudah)
-                <div class="border rounded-lg p-4 bg-gray-50">
-                    <img src="{{ \Illuminate\Support\Facades\Storage::url($record->foto_sesudah) }}" 
-                         alt="Foto Sesudah" 
+                <div class="border rounded-lg p-4 ">
+                    <img src="{{ \Storage::url($record->foto_sesudah) }}"
+                         alt="Foto Sesudah"
                          class="w-full h-auto rounded-lg shadow-md">
                 </div>
             @else
-                <div class="border rounded-lg p-8 bg-gray-50 text-center text-gray-400">
+                <div class="border rounded-lg p-8 text-center text-gray-400">
                     <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
@@ -62,7 +62,7 @@
     @if($record->catatan_khusus)
         <div>
             <h3 class="text-lg font-semibold mb-2">Catatan Khusus</h3>
-            <p class="text-gray-700 bg-gray-50 p-4 rounded-lg">{{ $record->catatan_khusus }}</p>
+            <p class="text-gray-700  p-4 rounded-lg">{{ $record->catatan_khusus }}</p>
         </div>
     @endif
 </div>

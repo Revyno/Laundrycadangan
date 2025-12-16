@@ -11,13 +11,13 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class PembayaranResource extends Resource
 {
     protected static ?string $model = Pembayaran::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
     public static function form(Form $form): Form
     {
@@ -25,7 +25,11 @@ class PembayaranResource extends Resource
             ->schema([
                 Forms\Components\Select::make('pesanan_id')
                     ->label('Pesanan')
-                    ->relationship('pesanan', 'kode_pesanan')
+                    ->relationship(
+                        name: 'pesanan',
+                        titleAttribute: 'kode_pesanan',
+                        modifyQueryUsing: fn (Builder $query) => $query->where('customer_id', Auth::id())
+                    )
                     ->required()
                     ->searchable()
                     ->preload()
@@ -71,6 +75,7 @@ class PembayaranResource extends Resource
 
                 Forms\Components\FileUpload::make('bukti_pembayaran')
                     ->label('Bukti Pembayaran')
+                    ->disk('public')
                     ->image()
                     ->directory('bukti-pembayaran')
                     ->imageEditor()
@@ -93,20 +98,65 @@ class PembayaranResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) =>
+                $query->whereHas('pesanan', fn ($q) => $q->where('customer_id', Auth::id()))
+            )
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('pesanan.kode_pesanan')
+                    ->label('Kode Pesanan')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('tanggal_pembayaran')
+                    ->label('Tanggal Bayar')
+                    ->date()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('jumlah_dibayar')
+                    ->label('Jumlah')
+                    ->money('IDR')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('metode_pembayaran')
+                    ->label('Metode')
+                    ->badge()
+                    ->formatStateUsing(fn ($state) => ucfirst($state)),
+
+                Tables\Columns\TextColumn::make('status_pembayaran')
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'partial' => 'info',
+                        'paid' => 'success',
+                        'refund' => 'danger',
+                    })
+                    ->formatStateUsing(fn ($state) => ucfirst($state)),
+
+                Tables\Columns\ImageColumn::make('bukti_pembayaran')
+                    ->label('Bukti')
+                    ->square()
+                    ->disk('public')
+                    ->visibility('public'),
+
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status_pembayaran')
+                    ->options([
+                        'pending' => 'Pending',
+                        'partial' => 'Partial',
+                        'paid' => 'Paid',
+                        'refund' => 'Refund',
+                    ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
                 ]),
-            ]);
+            ])
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array

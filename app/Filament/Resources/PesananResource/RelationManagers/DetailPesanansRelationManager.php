@@ -82,6 +82,7 @@ class DetailPesanansRelationManager extends RelationManager
                 Forms\Components\FileUpload::make('foto_sebelum')
                     ->label('Foto Sepatu (Sebelum)')
                     ->image()
+                    ->disk('public')
                     ->directory('sepatu-sebelum')
                     ->imageEditor()
                     ->maxSize(5120)
@@ -108,6 +109,8 @@ class DetailPesanansRelationManager extends RelationManager
                 Tables\Columns\ImageColumn::make('foto_sebelum')
                     ->label('Foto Sebelum')
                     ->circular()
+                    ->disk('public')
+                    ->visibility('public')
                     ->defaultImageUrl(url('/images/default-shoe.png'))
                     ->size(80)
                     ->toggleable(),
@@ -149,6 +152,8 @@ class DetailPesanansRelationManager extends RelationManager
 
                 Tables\Columns\ImageColumn::make('foto_sesudah')
                     ->label('Foto Sesudah')
+                    ->disk('public')
+                    ->visibility('public')
                     ->circular()
                     ->defaultImageUrl(url('/images/default-shoe.png'))
                     ->size(80)

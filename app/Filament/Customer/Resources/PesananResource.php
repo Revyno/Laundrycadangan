@@ -169,6 +169,7 @@ class PesananResource extends Resource
                         Forms\Components\FileUpload::make('foto_sebelum')
                             ->label('Foto Sepatu (Sebelum)')
                             ->image()
+                            ->disk('public')
                             ->directory('sepatu-sebelum')
                             ->imageEditor()
                             ->maxSize(5120) // 5MB
@@ -183,12 +184,12 @@ class PesananResource extends Resource
                         if (empty($state['layanan_id'])) {
                             return 'Layanan Baru';
                         }
-                        
+
                         $layanan = Layanan::find($state['layanan_id']);
                         if (!$layanan) {
                             return 'Layanan Tidak Ditemukan';
                         }
-                        
+
                         return $layanan->nama_layanan . ' (' . ($state['jumlah_pasang'] ?? 1) . ' pasang)';
                     })
                     ->addActionLabel('Tambah Layanan')

@@ -82,6 +82,7 @@ class PembayaranResource extends Resource
                 Forms\Components\FileUpload::make('bukti_pembayaran')
                     ->label('Bukti Pembayaran')
                     ->image()
+                    ->disk('public')
                     ->directory('bukti-pembayaran')
                     ->imageEditor()
                     ->maxSize(5120)
@@ -150,7 +151,10 @@ class PembayaranResource extends Resource
 
                 Tables\Columns\ImageColumn::make('bukti_pembayaran')
                     ->label('Bukti')
-                    ->circular()
+                    ->square()
+                    ->defaultImageUrl(url('/images/default-service.png'))
+                    ->disk('public')
+                    ->visibility('public')
                     ->size(50)
                     ->toggleable(),
 
@@ -184,7 +188,7 @@ class PembayaranResource extends Resource
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
-                    
+
                     Tables\Actions\Action::make('confirm')
                         ->label('Konfirmasi Pembayaran')
                         ->icon('heroicon-o-check-circle')

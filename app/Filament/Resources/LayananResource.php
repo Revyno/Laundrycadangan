@@ -68,6 +68,7 @@ class LayananResource extends Resource
 
                 Forms\Components\FileUpload::make('image')
                     ->label('Gambar Layanan')
+                    ->disk('public')
                     ->image()
                     ->directory('layanan-images')
                     ->imageEditor()
@@ -88,8 +89,10 @@ class LayananResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
-                    ->circular()
-                    ->defaultImageUrl(url('/images/default-service.png')),
+                    ->square()
+                    ->defaultImageUrl(url('/images/default-service.png'))
+                    ->disk('public') // tambahkan ini
+                    ->visibility('public'),
 
                 Tables\Columns\TextColumn::make('nama_layanan')
                     ->label('Nama Layanan')
