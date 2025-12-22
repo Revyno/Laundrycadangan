@@ -12,3 +12,78 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* Skeleton Loading Styles */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.skeleton-text {
+    height: 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.skeleton-title {
+    height: 2rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    width: 60%;
+}
+
+.skeleton-image {
+    height: 200px;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.skeleton-card {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+/* Hide skeleton when content is loaded */
+.loaded .skeleton {
+    display: none;
+}
+
+.loaded .content {
+    display: block;
+}
+
+.content {
+    display: none;
+}
+
+/* Custom Filament Sidebar Styles */
+.fi-sidebar {
+    background-color: rgb(245 158 11); /* amber-400 */
+}
+
+.fi-sidebar-item:hover {
+    background-color: rgb(217 119 6); /* amber-600 */
+}
+
+/* Mobile Layout Adjustments */
+@media (max-width: 768px) {
+    .fi-topbar-brand {
+        order: 2; /* Move logo to right */
+        margin-left: auto;
+    }
+
+    .fi-topbar-nav {
+        order: 1; /* Move nav to left */
+    }
+}

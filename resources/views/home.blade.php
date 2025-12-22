@@ -3,33 +3,96 @@
 
 @section('content')
 <!-- Navigation -->
-<nav class="bg-[#0B1320] border-gray-200 px-2 sm:px-4 py-2.5">
+<nav class="fixed top-0 left-0 right-0 z-50 bg-[#0B1320] border-gray-200 px-2 sm:px-4 py-2.5 transition-all duration-300">
     <div class="container flex flex-wrap items-center justify-between mx-auto">
+        <!-- Logo - always visible -->
         <a href="/" class="flex items-center">
             <img src="{{ asset('images/1.jpg') }}" class="h-10 mr-3" alt="Fresh Kicks Logo" />
         </a>
-        <div class="flex md:order-2">
-            <a href="{{ route('filament.customer.auth.login') }}" class="text-white bg-[#374151] hover:bg-[#111827] focus:ring-4 focus:outline-none focus:ring-[#111827] font-medium rounded-lg text-sm px-5 py-2.5 text-center">Login</a>
-            <a href="{{ route('filament.customer.auth.register') }}" class="text-[#333333] bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 ml-3">Sign Up</a>
-        </div>
-        <div class="items-center justify-between w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-            <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-[#0B1320] text-white">
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center justify-between w-full md:w-auto md:order-1">
+            <ul class="flex flex-row space-x-8 text-sm font-medium text-white">
                 <li>
-                    <a href="#about" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-white md:p-0" aria-current="page">About Us</a>
+                    <a href="#about" class="block py-2 pl-3 pr-4 text-white bg-[#374151] rounded md:bg-transparent md:text-white md:p-0" aria-current="page">About Us</a>
                 </li>
                 <li>
-                    <a href="{{ route('services') }}" class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0">Services</a>
+                    <a href="{{ route('services') }}" class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-[#374151] md:hover:bg-transparent md:hover:text-white md:p-0">Services</a>
                 </li>
                 <li>
-                    <a href="{{ route('gallery') }}" class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0">Gallery</a>
+                    <a href="{{ route('gallery') }}" class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-[#374151] md:hover:bg-transparent md:hover:text-white md:p-0">Gallery</a>
                 </li>
                 <li>
-                    <a href="{{ route('contactus') }}" class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0">Contact Us</a>
+                    <a href="{{ route('contactus') }}" class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-[#374151] md:hover:bg-transparent md:hover:text-white md:p-0">Contact Us</a>
                 </li>
             </ul>
         </div>
+
+        <!-- Auth buttons - desktop only -->
+        <div class="hidden md:flex md:order-2">
+            <a href="{{ route('filament.customer.auth.login') }}" class="text-white bg-[#374151] hover:bg-[#111827] focus:ring-4 focus:outline-none focus:ring-[#111827] font-medium rounded-lg text-sm px-5 py-2.5 text-center">Login</a>
+            <a href="{{ route('filament.customer.auth.register') }}" class="text-[#333333] bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 ml-3">Sign Up</a>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
     </div>
 </nav>
+
+<!-- Mobile Sidebar -->
+<div id="mobile-sidebar" class="fixed top-0 right-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-[#0B1320] border-l border-gray-700" tabindex="-1" aria-labelledby="drawer-navigation-label">
+    <div class="border-b border-gray-700 pb-4 flex items-center">
+        <a href="/" class="flex items-center space-x-2">
+            <img src="{{ asset('images/1.jpg') }}" class="h-8 w-8" alt="Fresh Kicks Logo" />
+            <span class="self-center text-lg font-semibold whitespace-nowrap text-white">Feasst.id</span>
+        </a>
+        <button type="button" id="sidebar-close-button" class="text-gray-300 bg-transparent hover:text-white hover:bg-gray-700 rounded-lg w-9 h-9 absolute top-2.5 end-2.5 flex items-center justify-center">
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+            </svg>
+            <span class="sr-only">Close menu</span>
+        </button>
+    </div>
+    <div class="py-5 overflow-y-auto">
+        <ul class="space-y-2 font-medium">
+            <li>
+                <a href="#about" class="flex items-center px-2 py-1.5 text-white bg-[#374151] rounded-lg hover:bg-gray-700 group" aria-current="page">
+                    <span class="ms-3">About Us</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('services') }}" class="flex items-center px-2 py-1.5 text-gray-300 rounded-lg hover:bg-[#374151] hover:text-white group">
+                    <span class="ms-3">Services</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('gallery') }}" class="flex items-center px-2 py-1.5 text-gray-300 rounded-lg hover:bg-[#374151] hover:text-white group">
+                    <span class="ms-3">Gallery</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('contactus') }}" class="flex items-center px-2 py-1.5 text-gray-300 rounded-lg hover:bg-[#374151] hover:text-white group">
+                    <span class="ms-3">Contact Us</span>
+                </a>
+            </li>
+        </ul>
+        <div class="pt-4 mt-4 space-y-2 border-t border-gray-700">
+            <a href="{{ route('filament.customer.auth.login') }}" class="flex items-center px-2 py-1.5 text-gray-300 rounded-lg hover:bg-[#374151] hover:text-white group">
+                <span class="ms-3">Login</span>
+            </a>
+            <a href="{{ route('filament.customer.auth.register') }}" class="flex items-center px-2 py-1.5 text-gray-300 rounded-lg hover:bg-[#374151] hover:text-white group">
+                <span class="ms-3">Sign Up</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Sidebar overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 z-30 bg-black bg-opacity-50 hidden"></div>
 
 <!-- Hero Carousel -->
 <div class="relative h-screen overflow-hidden">
@@ -88,20 +151,20 @@
 <section id="about" class="bg-[#5E5E5E] py-16">
     <div class="container mx-auto px-4">
         <div class="flex flex-col lg:flex-row items-center gap-12">
-            <div class="lg:w-1/2">
-                <div class="border-2 border-white rounded-full px-6 py-3 inline-block mb-8">
+            <div class="lg:w-1/2" data-aos="fade-right">
+                <div class="border-2 border-white rounded-full px-6 py-3 inline-block mb-8" data-aos="zoom-in" data-aos-delay="200">
                     <h2 class="text-3xl font-bold text-white uppercase text-center">DISCOVER US</h2>
                 </div>
                 <div class="text-white">
-                    <p class="text-lg leading-relaxed mb-6">
+                    <p class="text-lg leading-relaxed mb-6" data-aos="fade-up" data-aos-delay="400">
                         Didirikan dengan keyakinan bahwa setiap sepatu favorit layak mendapatkan perawatan terbaik, Feast.id hadir dengan layanan cleaning profesional untuk semua jenis alas kaki. Tim ahli kami menggunakan teknik dan produk premium untuk mengatasi mulai dari kotoran sehari-hari hingga noda membandel, tanpa merusak bahan atau warna sepatumu.
                     </p>
-                    <p class="text-lg leading-relaxed">
+                    <p class="text-lg leading-relaxed" data-aos="fade-up" data-aos-delay="600">
                         Mau itu sneakers kesayangan, sepatu formal andalan, atau boots yang sudah menemani banyak langkah, kami siap membuatnya tampak seperti baru lagi. Feast.id — bikin sepatu selalu bersih, wangi, dan siap tampil percaya diri di setiap langkahmu!
                     </p>
                 </div>
             </div>
-            <div class="lg:w-1/2">
+            <div class="lg:w-1/2" data-aos="fade-left" data-aos-delay="300">
                 <img src="{{ asset('images/aboutus.jpg') }}" alt="About Us" class="w-full rounded-lg shadow-lg">
             </div>
         </div>
@@ -113,8 +176,8 @@
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Service 1 -->
-            <div class="text-center">
-                <div class="bg-[#0B1320] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+            <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="bg-[#0B1320] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4" data-aos="zoom-in" data-aos-delay="400">
                     <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                     </svg>
@@ -124,8 +187,8 @@
             </div>
 
             <!-- Service 2 -->
-            <div class="text-center">
-                <div class="bg-[#0B1320] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+            <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                <div class="bg-[#0B1320] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4" data-aos="zoom-in" data-aos-delay="600">
                     <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path>
                         <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z"></path>
@@ -136,8 +199,8 @@
             </div>
 
             <!-- Service 3 -->
-            <div class="text-center">
-                <div class="bg-[#0B1320] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+            <div class="text-center" data-aos="fade-up" data-aos-delay="600">
+                <div class="bg-[#0B1320] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4" data-aos="zoom-in" data-aos-delay="800">
                     <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
                     </svg>
@@ -152,40 +215,40 @@
 <!-- Shoe Materials Section -->
 <section id="materials" class="bg-[#5E5E5E] py-16">
     <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-            <div class="border-2 border-white rounded-full px-6 py-3 inline-block">
+        <div class="text-center mb-12" data-aos="fade-down">
+            <div class="border-2 border-white rounded-full px-6 py-3 inline-block" data-aos="zoom-in" data-aos-delay="200">
                 <h2 class="text-3xl font-bold text-white uppercase">CARE FOR ALL SHOE MATERIALS</h2>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Nubuck -->
-            <div class="relative group cursor-pointer">
-                <img src="{{ asset('images/img-nubuck.png') }}" alt="Nubuck" class="w-full h-64 object-cover rounded-lg">
+            <div class="relative group cursor-pointer" data-aos="fade-up" data-aos-delay="300">
+                <img src="{{ asset('images/nubuck.jpg') }}" alt="Nubuck" class="w-full h-64 object-cover rounded-lg">
                 <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center rounded-lg">
                     <h3 class="text-white text-2xl font-bold uppercase">NUBUCK</h3>
                 </div>
             </div>
 
             <!-- Fabric -->
-            <div class="relative group cursor-pointer">
-                <img src="{{ asset('images/img-fabric.png') }}" alt="Fabric" class="w-full h-64 object-cover rounded-lg">
+            <div class="relative group cursor-pointer" data-aos="fade-up" data-aos-delay="400">
+                <img src="{{ asset('images/fabric.jpg') }}" alt="Fabric" class="w-full h-64 object-cover rounded-lg">
                 <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center rounded-lg">
                     <h3 class="text-white text-2xl font-bold uppercase">FABRIC</h3>
                 </div>
             </div>
 
             <!-- Leather -->
-            <div class="relative group cursor-pointer">
-                <img src="{{ asset('images/img-leather.png') }}" alt="Leather" class="w-full h-64 object-cover rounded-lg">
+            <div class="relative group cursor-pointer" data-aos="fade-up" data-aos-delay="500">
+                <img src="{{ asset('images/leather.jpg') }}" alt="Leather" class="w-full h-64 object-cover rounded-lg">
                 <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center rounded-lg">
                     <h3 class="text-white text-2xl font-bold uppercase">LEATHER</h3>
                 </div>
             </div>
 
             <!-- Suede -->
-            <div class="relative group cursor-pointer">
-                <img src="{{ asset('images/img-suede.png') }}" alt="Suede" class="w-full h-64 object-cover rounded-lg shadow-lg">
+            <div class="relative group cursor-pointer" data-aos="fade-up" data-aos-delay="600">
+                <img src="{{ asset('images/suede.jpg') }}" alt="Suede" class="w-full h-64 object-cover rounded-lg shadow-lg">
                 <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center rounded-lg">
                     <h3 class="text-white text-2xl font-bold uppercase">SUEDE</h3>
                 </div>
@@ -197,17 +260,18 @@
 <!-- Branch Locations -->
 <section id="locations" class="bg-[#5E5E5E] py-16">
     <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-            <div class="border-2 border-white rounded-full px-6 py-3 inline-block">
+        <div class="text-center mb-12" data-aos="fade-down">
+            <div class="border-2 border-white rounded-full px-6 py-3 inline-block" data-aos="zoom-in" data-aos-delay="200">
                 <h2 class="text-3xl font-bold text-white uppercase">BRANCH LOCATIONS</h2>
             </div>
         </div>
 
-        <div class="bg-[#EEF9FF] rounded-lg p-8">
+        <div class="bg-[#EEF9FF] rounded-lg p-8" data-aos="fade-up" data-aos-delay="300">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
+                <div data-aos="fade-right" data-aos-delay="400">
                     <h3 class="text-2xl font-bold text-gray-800 mb-4">SIDOARJO</h3>
                     <p class="text-gray-600 mb-6">Feasst.id Cuci Sepatu Kilat, Jl. Jatisari 3 No.44, Pepelegi, Kec. Waru, Kabupaten Sidoarjo, Jawa Timur 61256</p>
+                    <p>Jam Operasional: Senin - Jumat, 08:00 - 17:00</p>
                     <div class="flex gap-4">
                         <a href="https://wa.me/6281234567890" class="bg-white border border-gray-300 text-gray-800 px-6 py-2 rounded-full hover:bg-gray-50 transition duration-300">
                             WhatsApp
@@ -217,7 +281,7 @@
                         </a>
                     </div>
                 </div>
-                <div>
+                <div data-aos="fade-left" data-aos-delay="500">
                     <iframe src="https://maps.google.com/maps?q=Jl%20Aryo%20Bebangah%20no%2054,%20Sidoarjo,%20Jawa%20Timur,%20Indonesia%2061256&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" class="rounded-lg"></iframe>
                 </div>
         </div>
@@ -227,17 +291,17 @@
 <!-- Customer Reviews -->
 <section class="bg-[#5E5E5E] py-16">
     <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-            <div class="border-2 border-white rounded-full px-6 py-3 inline-block">
+        <div class="text-center mb-12" data-aos="fade-down">
+            <div class="border-2 border-white rounded-full px-6 py-3 inline-block" data-aos="zoom-in" data-aos-delay="200">
                 <h2 class="text-3xl font-bold text-white uppercase">CUSTOMER REVIEWS</h2>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Review 1 -->
-            <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="300">
                 <div class="flex items-center mb-4">
-                    <img src="{{ asset('images/jaka-profile.png') }}" alt="Jaka" class="w-12 h-12 rounded-full mr-4">
+                    <img src="{{ asset('images/human1.jpg') }}" alt="Jaka" class="w-12 h-12 rounded-full mr-4">
                     <div>
                         <h4 class="font-bold text-gray-800">JAKA</h4>
                         <div class="flex text-yellow-400">
@@ -254,7 +318,7 @@
             </div>
 
             <!-- Review 2 -->
-            <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="400">
                 <div class="flex items-center mb-4">
                     <img src="{{ asset('images/putriana-profile.png') }}" alt="Putriana Hudiyanti" class="w-12 h-12 rounded-full mr-4">
                     <div>
@@ -273,7 +337,7 @@
             </div>
 
             <!-- Review 3 -->
-            <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="500">
                 <div class="flex items-center mb-4">
                     <img src="{{ asset('images/vita-profile.png') }}" alt="Vita Aruben" class="w-12 h-12 rounded-full mr-4">
                     <div>
@@ -297,15 +361,15 @@
 <!-- Fresh Updates -->
 <section class="bg-[#5E5E5E] py-16">
     <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-            <div class="border-2 border-white rounded-full px-6 py-3 inline-block">
+        <div class="text-center mb-12" data-aos="fade-down">
+            <div class="border-2 border-white rounded-full px-6 py-3 inline-block" data-aos="zoom-in" data-aos-delay="200">
                 <h2 class="text-3xl font-bold text-white uppercase">FRESH UPDATES</h2>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Post 1 -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-lg">
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="300">
                 <img src="{{ asset('images/1123.jpg') }}" alt="Post 1" class="w-full h-64 object-cover">
                 <div class="p-6">
                     <p class="text-gray-600">Sepatu aja butuh Self healing, makanya kita kasi deep clean. Biar GK stresss liat Noda 😉🤔</p>
@@ -313,7 +377,7 @@
             </div>
 
             <!-- Post 2 -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-lg">
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="400">
                 <img src="{{ asset('images/untitled-1.jpg') }}" alt="Post 2" class="w-full h-64 object-cover">
                 <div class="p-6">
                     <p class="text-gray-600">Kalau manusia rawat tubuh pakai skincare, kalau sepatu pakai @feasst.id shoes care. Biar badan sepatumu tetep glowing ✨"</p>
@@ -321,7 +385,7 @@
             </div>
 
             <!-- Post 3 -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-lg">
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="500">
                 <img src="{{ asset('images/untitled-13.jpg') }}" alt="Post 3" class="w-full h-64 object-cover">
                 <div class="p-6">
                     <p class="text-gray-600">Siap tampil bersih setiap hari nya</p>
@@ -337,8 +401,8 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
                 <img src="{{ asset('images/1.jpg') }}" alt="Fresh Kicks Logo" class="h-12 mb-4">
-                <p class="text-gray-300 mb-4">Feasst.id Cuci Sepatu Kilat, Jl. Jatisari 3 No.44, Pepelegi, Kec. Waru, Kabupaten Sidoarjo, Jawa Timur 61256</p>
-                <p class="text-gray-300">© FEASST.ID 2025</p>
+                <p class="text-gray-300 mb-4">Feast.id Cuci Sepatu Kilat, Jl. Jatisari 3 No.44, Pepelegi, Kec. Waru, Kabupaten Sidoarjo, Jawa Timur 61256</p>
+                <p class="text-gray-300">© FEAST.ID 2025</p>
             </div>
             <div>
                 <h4 class="font-bold mb-4">Quick Links</h4>
@@ -385,4 +449,14 @@
 
 <!-- Flowbite JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+
+<!-- Page Loading Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Simulate loading time
+        setTimeout(function() {
+            document.body.classList.add('loaded');
+        }, 1500); // 1.5 seconds loading simulation
+    });
+</script>
 @endsection
