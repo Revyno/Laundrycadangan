@@ -1,6 +1,9 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+@import "flowbite/src/themes/default";
+
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@import "flowbite/src/themes/default";
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
