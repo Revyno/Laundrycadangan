@@ -68,9 +68,9 @@ class Customer extends Authenticatable
         return $this->hasMany(Pesanan::class);
     }
 
-    
+
     public function canAccessFilament(): bool
     {
-        return false; // Customer tidak bisa akses Filament
+        return true; // Customer bisa akses panel customer
     }
 }
