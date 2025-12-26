@@ -21,11 +21,9 @@
         <div class="hidden md:flex items-center justify-between w-full md:w-auto md:order-1">
             <ul class="flex flex-row space-x-8 text-sm font-medium text-white">
                 <li>
-                    <a href="/" class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-[#374151] md:hover:bg-transparent md:hover:text-white md:p-0">Home</a>
+                    <a href="{{ route('home') }}" class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-[#374151] md:hover:bg-transparent md:hover:text-white md:p-0">Home</a>
                 </li>
-                <li>
-                    <a href="#about" class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-[#374151] md:hover:bg-transparent md:hover:text-white md:p-0">About Us</a>
-                </li>
+
                 <li>
                     <a href="{{ route('services') }}" class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-[#374151] md:hover:bg-transparent md:hover:text-white md:p-0">Services</a>
                 </li>
@@ -51,7 +49,7 @@
     <div class="border-b border-gray-700 pb-4 flex items-center">
         <a href="/" class="flex items-center space-x-2">
             <img src="{{ asset('images/1.jpg') }}" class="h-8 w-8" alt="Fresh Kicks Logo" />
-            <span class="self-center text-lg font-semibold whitespace-nowrap text-white">Feasst.id</span>
+            <span class="self-center text-lg font-semibold whitespace-nowrap text-white">Feast.id</span>
         </a>
         <button type="button" id="sidebar-close-button" class="text-gray-300 bg-transparent hover:text-white hover:bg-gray-700 rounded-lg w-9 h-9 absolute top-2.5 end-2.5 flex items-center justify-center">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -63,15 +61,11 @@
     <div class="py-5 overflow-y-auto">
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="/" class="flex items-center px-2 py-1.5 text-gray-300 rounded-lg hover:bg-[#374151] hover:text-white group">
+                <a href="{{ route('home') }}" class="flex items-center px-2 py-1.5 text-gray-300 rounded-lg hover:bg-[#374151] hover:text-white group">
                     <span class="ms-3">Home</span>
                 </a>
             </li>
-            <li>
-                <a href="#about" class="flex items-center px-2 py-1.5 text-gray-300 rounded-lg hover:bg-[#374151] hover:text-white group">
-                    <span class="ms-3">About Us</span>
-                </a>
-            </li>
+
             <li>
                 <a href="{{ route('services') }}" class="flex items-center px-2 py-1.5 text-gray-300 rounded-lg hover:bg-[#374151] hover:text-white group">
                     <span class="ms-3">Services</span>
@@ -132,7 +126,7 @@
                             </div>
                             <div>
                                 <h3 class="font-semibold text-gray-800 mb-1">Address</h3>
-                                <p class="text-gray-600">Feasst.id Cuci Sepatu Kilat<br>Jl. Jatisari 3 No.44, Pepelegi<br>Kec. Waru, Kabupaten Sidoarjo<br>Jawa Timur 61256</p>
+                                <p class="text-gray-600">Feast.id Cuci Sepatu Kilat<br>Jl. Jatisari 3 No.44, Pepelegi<br>Kec. Waru, Kabupaten Sidoarjo<br>Jawa Timur 61256</p>
                             </div>
                         </div>
 
@@ -158,7 +152,7 @@
                             </div>
                             <div>
                                 <h3 class="font-semibold text-gray-800 mb-1">Email</h3>
-                                <p class="text-gray-600">info@feasst.id</p>
+                                <p class="text-gray-600">info@feast.id</p>
                             </div>
                         </div>
 
@@ -181,7 +175,13 @@
                 <div class="bg-white rounded-lg shadow-lg p-8">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Send us a Message</h2>
 
-                    <form action="#" method="POST" class="space-y-6">
+                    @if(session('success'))
+                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('contactus.send') }}" method="POST" class="space-y-6">
                         @csrf
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
@@ -243,14 +243,13 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
                 <img src="{{ asset('images/1.jpg') }}" alt="Fresh Kicks Logo" class="h-12 mb-4">
-                <p class="text-gray-300 mb-4">Feasst.id Cuci Sepatu Kilat, Jl. Jatisari 3 No.44, Pepelegi, Kec. Waru, Kabupaten Sidoarjo, Jawa Timur 61256</p>
-                <p class="text-gray-300">© FEASST.ID 2025</p>
+                <p class="text-gray-300 mb-4">Feast.id Cuci Sepatu Kilat, Jl. Jatisari 3 No.44, Pepelegi, Kec. Waru, Kabupaten Sidoarjo, Jawa Timur 61256</p>
+                <p class="text-gray-300">© FEAST.ID 2025</p>
             </div>
             <div>
                 <h4 class="font-bold mb-4">Quick Links</h4>
                 <ul class="space-y-2">
-                    <li><a href="/" class="text-gray-300 hover:text-white">Home</a></li>
-                    <li><a href="#about" class="text-gray-300 hover:text-white">About Us</a></li>
+                    <li><a href="{{ route('home') }}" class="text-gray-300 hover:text-white">Home</a></li>
                     <li><a href="{{ route('services') }}" class="text-gray-300 hover:text-white">Services</a></li>
                     <li><a href="{{ route('gallery') }}" class="text-gray-300 hover:text-white">Gallery</a></li>
                     <li><a href="{{ route('contactus') }}" class="text-gray-300 hover:text-white">Contact Us</a></li>
@@ -281,7 +280,7 @@
 </footer>
 
 <!-- Floating WhatsApp Button -->
-<a href="https://wa.me/6281234567890?text=Halo%20Feasst.id,%20saya%20ingin%20bertanya%20tentang%20layanan%20cuci%20sepatu"
+<a href="https://wa.me/6281234567890?text=Halo%20Feast.id,%20saya%20ingin%20bertanya%20tentang%20layanan%20cuci%20sepatu"
    class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 animate-pulse"
    target="_blank"
    title="Hubungi via WhatsApp">

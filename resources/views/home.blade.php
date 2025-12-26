@@ -14,7 +14,7 @@
         <div class="hidden md:flex items-center justify-between w-full md:w-auto md:order-1">
             <ul class="flex flex-row space-x-8 text-sm font-medium text-white">
                 <li>
-                    <a href="#about" class="block py-2 pl-3 pr-4 text-white bg-[#374151] rounded md:bg-transparent md:text-white md:p-0" aria-current="page">About Us</a>
+                    <a href="{{ route('home') }}" class="block py-2 pl-3 pr-4 text-white bg-[#374151] rounded md:bg-transparent md:text-white md:p-0" aria-current="page">Home</a>
                 </li>
                 <li>
                     <a href="{{ route('services') }}" class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-[#374151] md:hover:bg-transparent md:hover:text-white md:p-0">Services</a>
@@ -47,8 +47,8 @@
 <div id="mobile-sidebar" class="fixed top-0 right-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-[#0B1320] border-l border-gray-700" tabindex="-1" aria-labelledby="drawer-navigation-label">
     <div class="border-b border-gray-700 pb-4 flex items-center">
         <a href="/" class="flex items-center space-x-2">
-            <img src="{{ asset('images/1.jpg') }}" class="h-8 w-8" alt="Fresh Kicks Logo" />
-            <span class="self-center text-lg font-semibold whitespace-nowrap text-white">Feasst.id</span>
+            <img src="{{ asset('images/fav-admin-kecil.png') }}" class="h-8 w-8" alt="Fresh Kicks Logo" />
+            <span class="self-center text-lg font-semibold whitespace-nowrap text-white">Feast.id</span>
         </a>
         <button type="button" id="sidebar-close-button" class="text-gray-300 bg-transparent hover:text-white hover:bg-gray-700 rounded-lg w-9 h-9 absolute top-2.5 end-2.5 flex items-center justify-center">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -60,8 +60,8 @@
     <div class="py-5 overflow-y-auto">
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="#about" class="flex items-center px-2 py-1.5 text-white bg-[#374151] rounded-lg hover:bg-gray-700 group" aria-current="page">
-                    <span class="ms-3">About Us</span>
+                <a href="{{ route('home') }}" class="flex items-center px-2 py-1.5 text-white bg-[#374151] rounded-lg hover:bg-gray-700 group" aria-current="page">
+                    <span class="ms-3">Home</span>
                 </a>
             </li>
             <li>
@@ -270,8 +270,15 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div data-aos="fade-right" data-aos-delay="400">
                     <h3 class="text-2xl font-bold text-gray-800 mb-4">SIDOARJO</h3>
-                    <p class="text-gray-600 mb-6">Feasst.id Cuci Sepatu Kilat, Jl. Jatisari 3 No.44, Pepelegi, Kec. Waru, Kabupaten Sidoarjo, Jawa Timur 61256</p>
-                    <p>Jam Operasional: Senin - Jumat, 08:00 - 17:00</p>
+                    <p class="text-gray-600 mb-6">Feast.id Cuci Sepatu Kilat, Jl. Jatisari 3 No.44, Pepelegi, Kec. Waru, Kabupaten Sidoarjo, Jawa Timur 61256</p>
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Jam Operasional:</h4>
+                        <ul class="text-gray-600 text-sm space-y-1">
+                            <li><strong>Senin - Jumat:</strong> 08:00 - 17:00</li>
+                            <li><strong>Sabtu:</strong> 08:00 - 15:00</li>
+                            <li><strong>Minggu:</strong> Tutup</li>
+                        </ul>
+                    </div>
                     <div class="flex gap-4">
                         <a href="https://wa.me/6281234567890" class="bg-white border border-gray-300 text-gray-800 px-6 py-2 rounded-full hover:bg-gray-50 transition duration-300">
                             WhatsApp
@@ -370,7 +377,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Post 1 -->
             <div class="bg-white rounded-lg overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="300">
-                <img src="{{ asset('images/1123.jpg') }}" alt="Post 1" class="w-full h-64 object-cover">
+                <img src="{{ asset('images/shoes1.jpg') }}" alt="Post 1" class="w-full h-64 object-cover">
                 <div class="p-6">
                     <p class="text-gray-600">Sepatu aja butuh Self healing, makanya kita kasi deep clean. Biar GK stresss liat Noda 😉🤔</p>
                 </div>
@@ -378,15 +385,15 @@
 
             <!-- Post 2 -->
             <div class="bg-white rounded-lg overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="400">
-                <img src="{{ asset('images/untitled-1.jpg') }}" alt="Post 2" class="w-full h-64 object-cover">
+                <img src="{{ asset('images/shoes2.jpg') }}" alt="Post 2" class="w-full h-64 object-cover">
                 <div class="p-6">
-                    <p class="text-gray-600">Kalau manusia rawat tubuh pakai skincare, kalau sepatu pakai @feasst.id shoes care. Biar badan sepatumu tetep glowing ✨"</p>
+                    <p class="text-gray-600">Kalau manusia rawat tubuh pakai skincare, kalau sepatu pakai @feast.id shoes care. Biar badan sepatumu tetep glowing ✨"</p>
                 </div>
             </div>
 
             <!-- Post 3 -->
             <div class="bg-white rounded-lg overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="500">
-                <img src="{{ asset('images/untitled-13.jpg') }}" alt="Post 3" class="w-full h-64 object-cover">
+                <img src="{{ asset('images/shoes3.jpg') }}" alt="Post 3" class="w-full h-64 object-cover">
                 <div class="p-6">
                     <p class="text-gray-600">Siap tampil bersih setiap hari nya</p>
                 </div>
@@ -407,7 +414,7 @@
             <div>
                 <h4 class="font-bold mb-4">Quick Links</h4>
                 <ul class="space-y-2">
-                    <li><a href="#about" class="text-gray-300 hover:text-white">About Us</a></li>
+                    <li><a href="{{ route('home') }}" class="text-gray-300 hover:text-white">Home</a></li>
                     <li><a href="{{ route('services') }}" class="text-gray-300 hover:text-white">Services</a></li>
                     <li><a href="{{ route('gallery') }}" class="text-gray-300 hover:text-white">Gallery</a></li>
                     <li><a href="{{ route('contactus') }}" class="text-gray-300 hover:text-white">Contact Us</a></li>
@@ -438,7 +445,7 @@
 </footer>
 
 <!-- Floating WhatsApp Button -->
-<a href="https://wa.me/6281234567890?text=Halo%20Feasst.id,%20saya%20ingin%20bertanya%20tentang%20layanan%20cuci%20sepatu"
+<a href="https://wa.me/6281234567890?text=Halo%20Feast.id,%20saya%20ingin%20bertanya%20tentang%20layanan%20cuci%20sepatu"
    class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 animate-pulse"
    target="_blank"
    title="Hubungi via WhatsApp">

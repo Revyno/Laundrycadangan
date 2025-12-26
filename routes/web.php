@@ -7,3 +7,4 @@ Route::get('/', [SiteController::class, 'home'])->name('home');
 Route::get('/services', [SiteController::class, 'services'])->name('services');
 Route::get('/gallery', [SiteController::class, 'gallery'])->name('gallery');
 Route::get('/contactus', [SiteController::class, 'contactus'])->name('contactus');
+Route::post('/contactus', [SiteController::class, 'sendContactEmail'])->name('contactus.send');
