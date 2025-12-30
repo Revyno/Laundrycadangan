@@ -115,46 +115,46 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
                 <div class="grid gap-4">
                     <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/gallery-1-before.jpg') }}" alt="Before Cleaning">
+                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/1.jpg') }}" alt="Before Cleaning">
                     </div>
                     <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/gallery-2-after.jpg') }}" alt="After Cleaning">
+                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/2.jpg') }}" alt="After Cleaning">
                     </div>
                     <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/gallery-3-before.jpg') }}" alt="White Sneakers Before">
-                    </div>
-                </div>
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/gallery-1-after.jpg') }}" alt="After Cleaning">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/gallery-4-before.jpg') }}" alt="Running Shoes Before">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/gallery-5-after.jpg') }}" alt="Kids Shoes After">
+                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/3.jpg') }}" alt="White Sneakers Before">
                     </div>
                 </div>
                 <div class="grid gap-4">
                     <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/gallery-2-before.jpg') }}" alt="Leather Boots Before">
+                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/4.jpg') }}" alt="After Cleaning">
                     </div>
                     <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/gallery-3-after.jpg') }}" alt="White Sneakers After">
+                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/5.jpg') }}" alt="Running Shoes Before">
                     </div>
                     <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/gallery-6-before.jpg') }}" alt="Formal Shoes Before">
+                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/6.jpg') }}" alt="Kids Shoes After">
                     </div>
                 </div>
                 <div class="grid gap-4">
                     <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/gallery-4-after.jpg') }}" alt="Running Shoes After">
+                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/7.jpg') }}" alt="Leather Boots Before">
                     </div>
                     <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/gallery-5-before.jpg') }}" alt="Kids Shoes Before">
+                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/8.jpg') }}" alt="White Sneakers After">
                     </div>
                     <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/gallery-6-after.jpg') }}" alt="Formal Shoes After">
+                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/9.jpg') }}" alt="Formal Shoes Before">
+                    </div>
+                </div>
+                <div class="grid gap-4">
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/10.jpg') }}" alt="Running Shoes After">
+                    </div>
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/11.jpg') }}" alt="Kids Shoes Before">
+                    </div>
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/1.jpg') }}" alt="Formal Shoes After">
                     </div>
                 </div>
             </div>

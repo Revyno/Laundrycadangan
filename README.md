@@ -1,59 +1,216 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laundrycadangan - Laundry Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A comprehensive web-based laundry management system built with Laravel and Filament, designed to streamline shoe cleaning and laundry service operations.
 
-## About Laravel
+## 🚀 Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Admin Panel
+- **Dashboard Analytics**: Real-time statistics and insights
+- **Customer Management**: Complete customer database with profiles
+- **Order Management**: Track orders from creation to delivery
+- **Service Management**: Manage different laundry services and pricing
+- **Payment Processing**: Handle payments and generate invoices
+- **Reporting**: Generate detailed laundry reports
+- **User Management**: Admin and customer role management
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Customer Panel
+- **Order Placement**: Easy online order booking
+- **Order Tracking**: Real-time order status updates
+- **Payment Integration**: Secure online payments
+- **Invoice Generation**: Automatic invoice creation and email delivery
+- **Profile Management**: Customer account management
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Core Features
+- **Multi-Service Support**: Various laundry services (shoes, clothes, etc.)
+- **Order Status Tracking**: Complete workflow from pending to delivered
+- **Automated Notifications**: Email notifications for order updates
+- **PDF Generation**: Invoice and report generation
+- **Photo Upload**: Before/after service photos
+- **Delivery Options**: Drop-off, pickup, and delivery services
 
-## Learning Laravel
+## 🛠️ Technology Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- **Backend**: Laravel 12.41
+- **Admin Interface**: Filament 3.3
+- **Frontend**: Blade Templates, Tailwind CSS
+- **Database**: MySQL/SQLite
+- **JavaScript**: Vite, Livewire
+- **PDF Generation**: DomPDF
+- **File Storage**: AWS S3/Local
+- **Icons**: Heroicons
+- **Authentication**: Laravel Socialite
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 📋 Requirements
 
-## Laravel Sponsors
+- PHP 8.2 or higher
+- Composer
+- Node.js & NPM
+- MySQL or SQLite database
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🚀 Installation
 
-### Premium Partners
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Revyno/Laundrycadangan.git
+   cd Laundrycadangan
+   ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+2. **Install PHP dependencies**
+   ```bash
+   composer install
+   ```
 
-## Contributing
+3. **Install Node.js dependencies**
+   ```bash
+   npm install
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. **Environment Setup**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-## Code of Conduct
+5. **Database Configuration**
+   - Configure your database settings in `.env`
+   - Run migrations and seeders:
+   ```bash
+   php artisan migrate
+   php artisan db:seed
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+6. **Build Assets**
+   ```bash
+   npm run build
+   ```
 
-## Security Vulnerabilities
+7. **Start the Application**
+   ```bash
+   php artisan serve
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   Or use the convenient dev script:
+   ```bash
+   composer run dev
+   ```
 
-## License
+## 🔧 Configuration
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Environment Variables
+
+Key configuration options in `.env`:
+
+```env
+# Database
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laundrycadangan
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+
+# Mail Configuration
+MAIL_MAILER=smtp
+MAIL_HOST=your_smtp_host
+MAIL_PORT=587
+MAIL_USERNAME=your_email
+MAIL_PASSWORD=your_password
+
+# AWS S3 (Optional)
+AWS_ACCESS_KEY_ID=your_key
+AWS_SECRET_ACCESS_KEY=your_secret
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=your_bucket
+```
+
+### Admin Setup
+
+Create an admin user:
+```bash
+php artisan make:filament-user
+```
+
+## 📖 Usage
+
+### Admin Panel Access
+- Navigate to `/admin` to access the admin panel
+- Use Filament's authentication system
+
+### Customer Panel Access
+- Navigate to `/customer` for customer-specific features
+- Customers can register and manage their orders
+
+### Order Workflow
+1. Customer places order (drop-off/pickup/delivery)
+2. Admin processes the order
+3. Service completion with photo documentation
+4. Payment processing
+5. Delivery/notification to customer
+
+## 🗂️ Project Structure
+
+```
+app/
+├── Filament/           # Admin and customer panels
+├── Http/Controllers/   # Web controllers
+├── Mail/              # Email templates
+├── Models/            # Eloquent models
+├── Notifications/     # Notification classes
+└── Providers/         # Service providers
+
+database/
+├── migrations/        # Database migrations
+└── seeders/          # Database seeders
+
+resources/
+├── css/              # Stylesheets
+├── js/               # JavaScript files
+└── views/            # Blade templates
+
+public/
+├── css/              # Compiled styles
+├── js/               # Compiled scripts
+└── images/           # Static images
+```
+
+## 🧪 Testing
+
+Run the test suite:
+```bash
+php artisan test
+```
+
+## 📊 Available Commands
+
+- `composer run setup`: Complete project setup
+- `composer run dev`: Start development servers
+- `composer run test`: Run test suite
+- `npm run dev`: Start Vite dev server
+- `npm run build`: Build production assets
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Laravel](https://laravel.com/) - The PHP framework
+- [Filament](https://filamentphp.com/) - Admin panel framework
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Heroicons](https://heroicons.com/) - Beautiful hand-crafted SVG icons
+
+## 📞 Support
+
+For support, email support@laundrycadangan.com or create an issue in this repository.
+
+---
+
+**Made with Revel ❤️ for efficient laundry management system**
