@@ -57,6 +57,15 @@ class Pesanan extends Model
                 $pesanan->kode_pesanan = 'LND-' . $date . '-' . str_pad($number, 3, '0', STR_PAD_LEFT);
             }
         });
+
+        static::saved(function ($pesanan) {
+            // Recalculate total_harga from detail_pesanans subtotals
+            $total = $pesanan->detailPesanans()->sum('subtotal');
+            if ($pesanan->total_harga != $total) {
+                $pesanan->total_harga = $total;
+                $pesanan->saveQuietly(); // Save without triggering events
+            }
+        });
     }
 
     // Relationships

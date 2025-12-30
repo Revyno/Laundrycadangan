@@ -269,17 +269,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Call to Action -->
-            <div class="text-center">
-                <div class="bg-[#5E5E5E] rounded-lg p-8">
-                    <h3 class="text-2xl font-bold text-white mb-4">READY TO GET YOUR SHOES CLEANED?</h3>
-                    <p class="text-white mb-6">Contact us today to schedule your shoe cleaning service!</p>
-                    <a href="{{ route('contactus') }}" class="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300 inline-block">
-                        Contact Us Now
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
 </section>

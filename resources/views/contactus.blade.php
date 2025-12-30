@@ -221,18 +221,6 @@
                     </form>
                 </div>
             </div>
-
-            <!-- Map Section -->
-            <div class="mt-16">
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <div class="p-6 border-b">
-                        <h2 class="text-2xl font-bold text-gray-800">Find Us</h2>
-                    </div>
-                    <div class="aspect-w-16 aspect-h-9">
-                        <iframe src="https://maps.google.com/maps?q=Jl%20Aryo%20Bebangah%20no%2054,%20Sidoarjo,%20Jawa%20Timur,%20Indonesia%2061256&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" class="w-full"></iframe>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </section>

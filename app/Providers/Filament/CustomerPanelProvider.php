@@ -45,7 +45,8 @@ class CustomerPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Customer/Widgets'), for: 'App\Filament\Customer\Widgets')
             ->widgets([
                 AccountWidget::class,
-              
+                \App\Filament\Customer\Widgets\CustomerStatsWidget::class,
+                \App\Filament\Customer\Widgets\CustomerCurrentOrdersWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

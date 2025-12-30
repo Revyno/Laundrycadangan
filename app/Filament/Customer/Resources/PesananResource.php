@@ -252,9 +252,8 @@ class PesananResource extends Resource
                     ->placeholder('Belum ditentukan')
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('total_harga')
+                Tables\Columns\TextColumn::make('formatted_total')
                     ->label('Total')
-                    ->money('IDR')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('status')
@@ -345,6 +344,34 @@ class PesananResource extends Resource
         return [
             RelationManagers\DetailPesanansRelationManager::class,
         ];
+    }
+
+    protected static bool $shouldRegisterNavigation = true;
+
+    public static function mutateFormDataBeforeCreate(array $data): array
+    {
+        // Calculate total_harga from detail_pesanans
+        $details = $data['detail_pesanans'] ?? [];
+        $total = 0;
+        foreach ($details as $detail) {
+            $total += $detail['subtotal'] ?? 0;
+        }
+        $data['total_harga'] = $total;
+
+        return $data;
+    }
+
+    public static function mutateFormDataBeforeSave(array $data): array
+    {
+        // Calculate total_harga from detail_pesanans
+        $details = $data['detail_pesanans'] ?? [];
+        $total = 0;
+        foreach ($details as $detail) {
+            $total += $detail['subtotal'] ?? 0;
+        }
+        $data['total_harga'] = $total;
+
+        return $data;
     }
 
     public static function getPages(): array
