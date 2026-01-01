@@ -59,11 +59,19 @@ class CustomerCurrentOrdersWidget extends BaseWidget
                     ->expandableLimitedList(),
 
                 Tables\Columns\TextColumn::make('total_pasang')
-                    ->label('Total Pairs')
+                    ->label('Total Layanan')
                     ->alignCenter(),
 
-                Tables\Columns\TextColumn::make('formatted_total')
+                Tables\Columns\TextColumn::make('total_harga')
                     ->label('Total Price')
+                    ->getStateUsing(function (Pesanan $record) {
+                        $total = 0;
+                        foreach ($record->detailPesanans as $detail) {
+                            $total += $detail->subtotal ?? 0;
+                        }
+                        return $total;
+                    })
+                    ->money('IDR')
                     ->alignRight(),
             ])
             ->defaultSort('tanggal_pesanan', 'desc')

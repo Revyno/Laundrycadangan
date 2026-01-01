@@ -308,9 +308,9 @@
             <!-- Review 1 -->
             <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="300">
                 <div class="flex items-center mb-4">
-                    <img src="{{ asset('images/human1.jpg') }}" alt="Jaka" class="w-10 h-10 rounded-full ring-2 mr-4">
+                    <img src="{{ asset('images/human1.jpg') }}" alt="Jaka" class="w-12 h-12 rounded-full object-cover ring-2 mr-4">
                     <div>
-                        <h4 class="font-bold text-gray-800">JAKA</h4>
+                        <h4 class="font-bold text-gray-800">Mawar Jaka</h4>
                         <div class="flex text-yellow-400 mt-2">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -327,7 +327,7 @@
             <!-- Review 2 -->
             <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="400">
                 <div class="flex items-center mb-4">
-                    <img src="{{ asset('images/putriana-profile.png') }}" alt="Putriana Hudiyanti" class="w-10 h-10 rounded-full mr-4">
+                    <img src="{{ asset('images/pp1.jpg') }}" alt="Putriana Hudiyanti" class="w-12 h-12 rounded-full object-cover ring-2 mr-4">
                     <div>
                         <h4 class="font-bold text-gray-800">Putriana Hudiyanti</h4>
                         <div class="flex text-yellow-400 mt-2">
@@ -346,9 +346,9 @@
             <!-- Review 3 -->
             <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="500">
                 <div class="flex items-center mb-4">
-                    <img src="{{ asset('images/vita-profile.png') }}" alt="Vita Aruben" class="w-12 h-12 rounded-full mr-4">
+                    <img src="{{ asset('images/pp2.jpg') }}" alt="Vita Aruben" class="w-12 h-12 rounded-full object-cover ring-2 mr-4">
                     <div>
-                        <h4 class="font-bold text-gray-800">Vita Aruben</h4>
+                        <h4 class="font-bold text-gray-800">Denis Cool</h4>
                         <div class="flex text-yellow-400 mt-2">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>

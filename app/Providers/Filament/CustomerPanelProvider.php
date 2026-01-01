@@ -30,7 +30,7 @@ class CustomerPanelProvider extends PanelProvider
             ->registration()
             ->authGuard('customer') // ← GUARD CUSTOMER
             ->authPasswordBroker('customers')
-            ->brandName('Laundry Admin')
+            ->brandName('Customer')
             ->brandLogo(asset('images/1.jpg'))
             ->brandLogoHeight('40px')
             ->favicon(asset('images/fav-admin-kecil.png'))

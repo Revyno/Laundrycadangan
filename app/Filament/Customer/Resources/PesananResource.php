@@ -252,8 +252,16 @@ class PesananResource extends Resource
                     ->placeholder('Belum ditentukan')
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('formatted_total')
-                    ->label('Total')
+                Tables\Columns\TextColumn::make('total_harga')
+                    ->label('Total Harga')
+                    ->getStateUsing(function (Pesanan $record) {
+                        $total = 0;
+                        foreach ($record->detailPesanans as $detail) {
+                            $total += $detail->subtotal ?? 0;
+                        }
+                        return $total;
+                    })
+                    ->money('IDR')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('status')

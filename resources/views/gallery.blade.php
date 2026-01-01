@@ -160,7 +160,7 @@
             </div>
 
             <!-- Service Categories -->
-            <div class="bg-[#5E5E5E] rounded-lg p-8 mb-16">
+            {{-- <div class="bg-[#5E5E5E] rounded-lg p-8 mb-16">
                 <h2 class="text-2xl font-bold text-white text-center mb-8 uppercase">Service Categories</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="text-center">
@@ -203,10 +203,10 @@
                         <p class="text-white text-sm">Children's shoes & sandals</p>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Call to Action -->
-            <div class="text-center">
+            {{-- <div class="text-center">
                 <div class="bg-[#5E5E5E] rounded-lg p-8">
                     <h3 class="text-2xl font-bold text-white mb-4">READY TO SEE YOUR SHOES TRANSFORMED?</h3>
                     <p class="text-white mb-6">Experience the Feast.id difference. Book your cleaning service today!</p>
@@ -221,7 +221,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </section>
 
 <!-- Footer -->

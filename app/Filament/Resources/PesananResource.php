@@ -46,12 +46,12 @@ class PesananResource extends Resource
                 Forms\Components\DatePicker::make('tanggal_selesai')
                     ->label('Tanggal Selesai'),
 
-                Forms\Components\TextInput::make('total_harga')
-                    ->numeric()
-                    ->prefix('Rp')
-                    ->required()
-                    ->label('Total Harga')
-                    ->disabled(),
+                // Forms\Components\TextInput::make('total_harga')
+                //     ->numeric()
+                //     ->prefix('Rp')
+                //     ->required()
+                //     ->label('Total Harga')
+                //     ->disabled(),
 
                 Forms\Components\Select::make('status')
                     ->options([
@@ -109,6 +109,13 @@ class PesananResource extends Resource
 
                 Tables\Columns\TextColumn::make('total_harga')
                     ->label('Total')
+                     ->getStateUsing(function (Pesanan $record) {
+                        $total = 0;
+                        foreach ($record->detailPesanans as $detail) {
+                            $total += $detail->subtotal ?? 0;
+                        }
+                        return $total;
+                    })
                     ->money('IDR')
                     ->sortable(),
 
@@ -131,7 +138,7 @@ class PesananResource extends Resource
                     ->separator(','),
 
                 Tables\Columns\IconColumn::make('has_photos')
-                    ->label('Ada Foto')
+                    ->label('Foto?')
                     ->boolean()
                     ->getStateUsing(fn (Pesanan $record) => $record->detailPesanans()->whereNotNull('foto_sebelum')->exists())
                     ->trueIcon('heroicon-o-camera')

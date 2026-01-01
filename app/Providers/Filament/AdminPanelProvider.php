@@ -31,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->authGuard('admin') // ← GUARD ADMIN
             ->authPasswordBroker('admins')
-            ->brandName('Laundry Admin')
+            ->brandName('Admin')
             ->brandLogo(asset('images/1.jpg'))
             ->brandLogoHeight('40px')
             ->favicon(asset('images/fav-admin-kecil.png'))
@@ -47,7 +47,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
-               
+
             ])
             ->middleware([
                 EncryptCookies::class,
