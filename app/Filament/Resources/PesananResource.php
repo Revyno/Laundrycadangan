@@ -50,13 +50,6 @@ class PesananResource extends Resource
                     ->numeric()
                     ->prefix('Rp')
                     ->required()
-                    ->getStateUsing(function (Pesanan $record) {
-                        $total = 0;
-                        foreach ($record->detailPesanans as $detail) {
-                            $total += $detail->subtotal ?? 0;
-                        }
-                        return $total;
-                    })
                     ->label('Total Harga')
                     ->disabled(),
 

@@ -2,8 +2,11 @@
     <div class="print-container" id="printable">
         <!-- Header Invoice -->
         <div class="mb-6 text-center border-b-2 border-gray-300 pb-4">
+             <!-- Logo -->
+            <div class="flex justify-center mb-4">
+                <img src="{{ asset('images/1.jpg') }}" alt="Feastid Logo" class="h-16 w-auto">
+            </div>
             <h1 class="text-3xl font-bold text-gray-800">INVOICE PEMBAYARAN</h1>
-            <p class="text-sm text-gray-600 mt-2">FEAST ID</p>
             <p class="text-sm text-gray-600">No. Invoice: {{ $record->id }}</p>
         </div>
 
@@ -111,6 +114,7 @@
                 padding: 10px;
                 font-size: 10px;
                 line-height: 1.2;
+                /* page-break-inside: avoid; */
             }
             .print-container h1 {
                 font-size: 18px;

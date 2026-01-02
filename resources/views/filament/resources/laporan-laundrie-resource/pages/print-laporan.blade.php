@@ -2,6 +2,10 @@
     <div class="print-container" id="printable">
         <!-- Header Laporan -->
         <div class="mb-6 text-center">
+            <!-- Logo -->
+            <div class="flex justify-center mb-4">
+                <img src="{{ asset('images/1.jpg') }}" alt="Feastid Logo" class="h-16 w-auto">
+            </div>
             <h1 class="text-2xl font-bold">LAPORAN LAUNDRY</h1>
             <p class="text-sm text-gray-600">
                 Periode: {{ $record->periode_awal->format('d/m/Y') }} - {{ $record->periode_akhir->format('d/m/Y') }}

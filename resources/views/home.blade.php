@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@vite('resources/css/app.css', 'resources/js/app.js')
+{{-- @vite('resources/css/app.css', 'resources/js/app.js') --}}
 
 @section('content')
 <!-- Navigation -->
@@ -617,15 +617,15 @@
 </a>
 
 <!-- Flowbite JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script> --}}
 
 <!-- Page Loading Script -->
-<script>
+{{-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Simulate loading time
         setTimeout(function() {
             document.body.classList.add('loaded');
-        }, 1500); // 1.5 seconds loading simulation
+        }, 1500);
     });
-</script>
+</script> --}}
 @endsection
