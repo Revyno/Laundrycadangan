@@ -55,10 +55,32 @@ class LaporanLaundrieResource extends Resource
                             ->required()
                             ->default(now()->endOfMonth()),
 
-                        Forms\Components\TextInput::make('total_pendapatan')
-                            ->label('Total Pendapatan')
-                            ->numeric()
-                            ->prefix('Rp')
+                        Forms\Components\Placeholder::make('total_pendapatan_display')
+                            ->label('Total Pendapatan (Otomatis)')
+                            ->content(function ($get, $record) {
+                                // If editing existing record, show current value
+                                if ($record && $record->total_pendapatan) {
+                                    return 'Rp ' . number_format($record->total_pendapatan, 0, ',', '.');
+                                }
+
+                                // For new records, calculate based on selected dates
+                                $periodeAwal = $get('periode_awal');
+                                $periodeAkhir = $get('periode_akhir');
+
+                                if ($periodeAwal && $periodeAkhir) {
+                                    $totalPendapatan = \Illuminate\Support\Facades\DB::table('pembayarans')
+                                        ->join('pesanans', 'pembayarans.pesanan_id', '=', 'pesanans.id')
+                                        ->where('pembayarans.status_pembayaran', 'paid')
+                                        ->whereBetween('pembayarans.tanggal_pembayaran', [$periodeAwal, $periodeAkhir])
+                                        ->sum('pembayarans.jumlah_dibayar');
+
+                                    return 'Rp ' . number_format($totalPendapatan, 0, ',', '.');
+                                }
+
+                                return 'Rp 0 (Pilih periode untuk kalkulasi otomatis)';
+                            }),
+
+                        Forms\Components\Hidden::make('total_pendapatan')
                             ->default(0),
 
                         Forms\Components\TextInput::make('total_pengeluaran')
@@ -67,56 +89,119 @@ class LaporanLaundrieResource extends Resource
                             ->prefix('Rp')
                             ->default(0),
 
-                        Forms\Components\TextInput::make('total_profit')
-                            ->label('Total Profit')
-                            ->numeric()
-                            ->prefix('Rp')
-                            ->default(0)
-                            ->disabled(),
+                        Forms\Components\Placeholder::make('total_profit_display')
+                            ->label('Total Profit (Otomatis)')
+                            ->content(function ($get, $record) {
+                                if ($record && isset($record->total_profit)) {
+                                    return 'Rp ' . number_format($record->total_profit, 0, ',', '.');
+                                }
 
-                        Forms\Components\TextInput::make('total_pesanan')
-                            ->label('Total Pesanan')
-                            ->numeric()
+                                $pendapatan = $get('total_pendapatan') ?? 0;
+                                $pengeluaran = $get('total_pengeluaran') ?? 0;
+                                $profit = $pendapatan - $pengeluaran;
+
+                                return 'Rp ' . number_format($profit, 0, ',', '.');
+                            }),
+
+                        Forms\Components\Hidden::make('total_profit')
                             ->default(0),
 
-                        Forms\Components\TextInput::make('total_sepatu')
-                            ->label('Total Sepatu (pasang)')
-                            ->numeric()
+                        Forms\Components\Placeholder::make('total_pesanan_display')
+                            ->label('Total Pesanan (Otomatis)')
+                            ->content(function ($get, $record) {
+                                if ($record && isset($record->total_pesanan)) {
+                                    return $record->total_pesanan . ' pesanan';
+                                }
+
+                                $periodeAwal = $get('periode_awal');
+                                $periodeAkhir = $get('periode_akhir');
+
+                                if ($periodeAwal && $periodeAkhir) {
+                                    $totalPesanan = \App\Models\Pesanan::whereBetween('created_at', [$periodeAwal, $periodeAkhir])->count();
+                                    return $totalPesanan . ' pesanan';
+                                }
+
+                                return '0 pesanan';
+                            }),
+
+                        Forms\Components\Hidden::make('total_pesanan')
                             ->default(0),
 
-                        Forms\Components\TextInput::make('pesanan_selesai')
-                            ->label('Pesanan Selesai')
-                            ->numeric()
+                        Forms\Components\Placeholder::make('total_sepatu_display')
+                            ->label('Total Sepatu (Otomatis)')
+                            ->content(function ($get, $record) {
+                                if ($record && isset($record->total_sepatu)) {
+                                    return $record->total_sepatu . ' pasang';
+                                }
+
+                                $periodeAwal = $get('periode_awal');
+                                $periodeAkhir = $get('periode_akhir');
+
+                                if ($periodeAwal && $periodeAkhir) {
+                                    $totalSepatu = \Illuminate\Support\Facades\DB::table('detail_pesanans')
+                                        ->join('pesanans', 'detail_pesanans.pesanan_id', '=', 'pesanans.id')
+                                        ->whereBetween('pesanans.created_at', [$periodeAwal, $periodeAkhir])
+                                        ->sum('detail_pesanans.jumlah_pasang');
+
+                                    return $totalSepatu . ' pasang';
+                                }
+
+                                return '0 pasang';
+                            }),
+
+                        Forms\Components\Hidden::make('total_sepatu')
                             ->default(0),
 
-                        Forms\Components\TextInput::make('pesanan_batal')
-                            ->label('Pesanan Batal')
-                            ->numeric()
+                        Forms\Components\Placeholder::make('pesanan_selesai_display')
+                            ->label('Pesanan Selesai (Otomatis)')
+                            ->content(function ($get, $record) {
+                                if ($record && isset($record->pesanan_selesai)) {
+                                    return $record->pesanan_selesai . ' pesanan';
+                                }
+
+                                $periodeAwal = $get('periode_awal');
+                                $periodeAkhir = $get('periode_akhir');
+
+                                if ($periodeAwal && $periodeAkhir) {
+                                    $selesai = \App\Models\Pesanan::whereBetween('created_at', [$periodeAwal, $periodeAkhir])
+                                        ->whereIn('status', ['completed', 'delivered'])
+                                        ->count();
+
+                                    return $selesai . ' pesanan';
+                                }
+
+                                return '0 pesanan';
+                            }),
+
+                        Forms\Components\Hidden::make('pesanan_selesai')
+                            ->default(0),
+
+                        Forms\Components\Placeholder::make('pesanan_batal_display')
+                            ->label('Pesanan Batal (Otomatis)')
+                            ->content(function ($get, $record) {
+                                if ($record && isset($record->pesanan_batal)) {
+                                    return $record->pesanan_batal . ' pesanan';
+                                }
+
+                                $periodeAwal = $get('periode_awal');
+                                $periodeAkhir = $get('periode_akhir');
+
+                                if ($periodeAwal && $periodeAkhir) {
+                                    $batal = \App\Models\Pesanan::whereBetween('created_at', [$periodeAwal, $periodeAkhir])
+                                        ->where('status', 'cancelled')
+                                        ->count();
+
+                                    return $batal . ' pesanan';
+                                }
+
+                                return '0 pesanan';
+                            }),
+
+                        Forms\Components\Hidden::make('pesanan_batal')
                             ->default(0),
                     ])->columns(2),
 
-                Forms\Components\Card::make()
-                    ->schema([
-                        Forms\Components\Repeater::make('layanan_terpopuler')
-                            ->schema([
-                                Forms\Components\TextInput::make('layanan')
-                                    ->label('Nama Layanan')
-                                    ->required(),
 
-                                Forms\Components\TextInput::make('jumlah')
-                                    ->label('Jumlah')
-                                    ->numeric()
-                                    ->required(),
-
-                                Forms\Components\TextInput::make('pendapatan')
-                                    ->label('Pendapatan')
-                                    ->numeric()
-                                    ->prefix('Rp')
-                                    ->default(0),
-                            ])
-                            ->columns(3)
-                            ->columnSpanFull(),
-                    ]),
             ]);
     }
 

@@ -1,0 +1,56 @@
+# Laravel specific
+/vendor
+/node_modules
+/public/storage
+/storage/app/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+/bootstrap/cache/*
+.env
+.env.local
+.env.production
+.env.staging
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+LICENSE
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+docker/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests
+/tests
+phpunit.xml
+
+# Composer
+composer.lock
+
+# Node
+package-lock.json
+yarn.lock
+
+# Temporary files
+*.tmp
+*.log

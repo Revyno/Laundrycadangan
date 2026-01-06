@@ -66,14 +66,6 @@ class LayananResource extends Resource
                             ->default(1),
                     ])->columns(2),
 
-                Forms\Components\FileUpload::make('image')
-                    ->label('Gambar Layanan')
-                    ->disk('public')
-                    ->image()
-                    ->directory('layanan-images')
-                    ->imageEditor()
-                    ->columnSpanFull(),
-
                 Forms\Components\Card::make()
                     ->schema([
                         Forms\Components\Toggle::make('is_active')
@@ -88,12 +80,6 @@ class LayananResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image')
-                    ->square()
-                    ->defaultImageUrl(url('/images/default-service.png'))
-                    ->disk('public') // tambahkan ini
-                    ->visibility('public'),
-
                 Tables\Columns\TextColumn::make('nama_layanan')
                     ->label('Nama Layanan')
                     ->searchable()

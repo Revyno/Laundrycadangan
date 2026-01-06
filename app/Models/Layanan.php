@@ -17,9 +17,7 @@ class Layanan extends Model
         'nama_layanan',
         'kategori_layanan',
         'deskripsi',
-        'durasi',
-        
-        'image',
+        'durasi_hari',
         'is_active'
     ];
 
@@ -100,6 +98,12 @@ class Layanan extends Model
             if ($layanan->isDirty('kategori_layanan')) {
                 $layanan->durasi_hari = self::DURASI_HARI_KATEGORI[$layanan->kategori_layanan] ?? 1;
             }
+        });
+
+        static::created(function ($layanan) {
+            // Send notification to all admins when service is created
+            $notification = new \App\Notifications\ServiceCreated($layanan);
+            $notification->send();
         });
     }
 

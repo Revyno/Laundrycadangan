@@ -36,7 +36,17 @@ class PesananResource extends Resource
                     ->relationship('customer', 'name')
                     ->required()
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->live()
+                    ->afterStateUpdated(function ($state, Forms\Set $set, Forms\Get $get) {
+                        // When customer changes, update delivery address if method is delivery
+                        if ($state && $get('metode_pengantaran') === 'delivery') {
+                            $customer = \App\Models\Customer::find($state);
+                            if ($customer && $customer->address) {
+                                $set('alamat_pengantaran', $customer->address);
+                            }
+                        }
+                    }),
 
                 Forms\Components\DatePicker::make('tanggal_pesanan')
                     ->required()
@@ -73,12 +83,32 @@ class PesananResource extends Resource
                         'delivery' => 'Delivery',
                     ])
                     ->default('drop_off')
-                    ->required(),
+                    ->required()
+                    ->live()
+                    ->afterStateUpdated(function ($state, Forms\Set $set, Forms\Get $get) {
+                        // When delivery method changes to delivery, auto-populate address
+                        if ($state === 'delivery') {
+                            $customerId = $get('customer_id');
+                            if ($customerId) {
+                                $customer = \App\Models\Customer::find($customerId);
+                                if ($customer && $customer->address) {
+                                    $set('alamat_pengantaran', $customer->address);
+                                }
+                            }
+                        }
+                    }),
 
                 Forms\Components\Textarea::make('alamat_pengantaran')
                     ->label('Alamat Pengantaran')
                     ->maxLength(65535)
                     ->requiredIf('metode_pengantaran', 'delivery')
+                    ->afterStateHydrated(function (Forms\Components\Textarea $component, $state, $record) {
+                        // If editing and no address is set, get from customer profile
+                        if ($record && empty($state) && $record->customer && $record->customer->address) {
+                            $component->state($record->customer->address);
+                        }
+                    })
+                    ->helperText('Otomatis diisi dari alamat lengkap customer jika kosong')
                     ->columnSpanFull(),
 
                 Forms\Components\Textarea::make('catatan')

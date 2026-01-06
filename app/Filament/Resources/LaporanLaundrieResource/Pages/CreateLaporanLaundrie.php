@@ -20,4 +20,10 @@ class CreateLaporanLaundrie extends CreateRecord
 
         return $data;
     }
+
+    protected function afterCreate(): void
+    {
+        // Generate laporan data automatically after creation
+        LaporanLaundrieResource::generateLaporanData($this->record);
+    }
 }

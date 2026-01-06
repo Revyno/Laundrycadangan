@@ -16,4 +16,10 @@ class EditLaporanLaundrie extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function afterSave(): void
+    {
+        // Generate laporan data automatically after saving
+        LaporanLaundrieResource::generateLaporanData($this->record);
+    }
 }

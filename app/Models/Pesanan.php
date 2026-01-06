@@ -66,6 +66,25 @@ class Pesanan extends Model
                 $pesanan->saveQuietly(); // Save without triggering events
             }
         });
+
+        static::created(function ($pesanan) {
+            // Send notification to all admins when order is created
+            $notification = new \App\Notifications\OrderCreated($pesanan);
+            $notification->send();
+        });
+
+        static::updating(function ($pesanan) {
+            // Store old status for status change notification
+            $pesanan->old_status = $pesanan->getOriginal('status');
+        });
+
+        static::updated(function ($pesanan) {
+            // Send notification when order status changes
+            if ($pesanan->wasChanged('status') && isset($pesanan->old_status)) {
+                $notification = new \App\Notifications\OrderStatusUpdated($pesanan, $pesanan->old_status, $pesanan->status);
+                $notification->send();
+            }
+        });
     }
 
     // Relationships

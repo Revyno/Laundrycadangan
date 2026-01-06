@@ -44,6 +44,8 @@ class Pembayaran extends Model
     const STATUS_PAID = 'paid';
     const STATUS_REFUND = 'refund';
 
+    const STATUS_FAILED = 'failed';
+
     // Relationships
     public function pesanan(): BelongsTo
     {
@@ -64,5 +66,29 @@ class Pembayaran extends Model
             ->sum('jumlah_dibayar');
 
         return max(0, $totalHarga - $totalDibayar);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($pembayaran) {
+            // Send notification to all admins when payment is created
+            $notification = new \App\Notifications\PaymentCreated($pembayaran);
+            $notification->send();
+        });
+
+        static::updating(function ($pembayaran) {
+            // Store old status for status change notification
+            $pembayaran->old_status = $pembayaran->getOriginal('status_pembayaran');
+        });
+
+        static::updated(function ($pembayaran) {
+            // Send notification when payment status changes
+            if ($pembayaran->wasChanged('status_pembayaran') && isset($pembayaran->old_status)) {
+                $notification = new \App\Notifications\PaymentStatusUpdated($pembayaran, $pembayaran->old_status, $pembayaran->status_pembayaran);
+                $notification->send();
+            }
+        });
     }
 }

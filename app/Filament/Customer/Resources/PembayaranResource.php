@@ -19,7 +19,7 @@ class PembayaranResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
-  
+
 
     public static function form(Form $form): Form
     {
@@ -36,7 +36,16 @@ class PembayaranResource extends Resource
                     ->searchable()
                     ->preload()
                     ->disabled(fn ($context) => $context === 'edit')
-                    ->dehydrated(),
+                    ->dehydrated()
+                    ->live()
+                    ->afterStateUpdated(function ($state, Forms\Set $set) {
+                        if ($state) {
+                            $pesanan = \App\Models\Pesanan::find($state);
+                            if ($pesanan) {
+                                $set('jumlah_dibayar', $pesanan->total_harga);
+                            }
+                        }
+                    }),
 
                 Forms\Components\DatePicker::make('tanggal_pembayaran')
                     ->label('Tanggal Pembayaran')
@@ -48,7 +57,9 @@ class PembayaranResource extends Resource
                     ->numeric()
                     ->prefix('Rp')
                     ->required()
-                    ->minValue(0),
+                    ->disabled()
+                    ->dehydrated()
+                    ->helperText('Jumlah dibayar otomatis dihitung berdasarkan total pesanan'),
 
                 Forms\Components\Select::make('metode_pembayaran')
                     ->label('Metode Pembayaran')
@@ -70,6 +81,7 @@ class PembayaranResource extends Resource
                         'partial' => 'Partial',
                         'paid' => 'Paid',
                         'refund' => 'Refund',
+                        'failed' => 'Failed',
                     ])
                     ->default('pending')
                     ->required()
@@ -132,6 +144,7 @@ class PembayaranResource extends Resource
                         'partial' => 'info',
                         'paid' => 'success',
                         'refund' => 'danger',
+                        'failed' => 'danger',
                     })
                     ->formatStateUsing(fn ($state) => ucfirst($state)),
 
@@ -149,6 +162,7 @@ class PembayaranResource extends Resource
                         'partial' => 'Partial',
                         'paid' => 'Paid',
                         'refund' => 'Refund',
+                        'failed' => 'Failed',
                     ]),
             ])
             ->actions([

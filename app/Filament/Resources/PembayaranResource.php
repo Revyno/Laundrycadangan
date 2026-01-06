@@ -73,6 +73,7 @@ class PembayaranResource extends Resource
                         'partial' => 'Partial',
                         'paid' => 'Paid',
                         'refund' => 'Refund',
+                        'failed' => 'Failed',
                     ])
                     ->default('pending')
                     ->required()
@@ -145,6 +146,7 @@ class PembayaranResource extends Resource
                         'partial' => 'info',
                         'paid' => 'success',
                         'refund' => 'danger',
+                        'failed' => 'danger',
                     })
                     ->formatStateUsing(fn ($state) => ucfirst($state))
                     ->sortable(),
@@ -171,6 +173,7 @@ class PembayaranResource extends Resource
                         'partial' => 'Partial',
                         'paid' => 'Paid',
                         'refund' => 'Refund',
+                        'failed' => 'Failed',
                     ]),
 
                 Tables\Filters\SelectFilter::make('metode_pembayaran')

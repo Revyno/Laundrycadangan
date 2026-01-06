@@ -29,7 +29,8 @@ return new class extends Migration
                 'pending',
                 'partial',
                 'paid',
-                'refund'
+                'refund',
+                'failed',
             ])->default('pending');
             $table->string('bukti_pembayaran')->nullable();
             $table->string('nomor_referensi')->nullable();

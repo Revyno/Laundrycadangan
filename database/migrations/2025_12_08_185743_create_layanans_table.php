@@ -24,9 +24,8 @@ return new class extends Migration
 
             // $table->decimal('harga_layanan', 10, 2); // DIHAPUS
             $table->text('deskripsi')->nullable();
-         
+
             $table->integer('durasi_hari')->default(1);
-            $table->string('image')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

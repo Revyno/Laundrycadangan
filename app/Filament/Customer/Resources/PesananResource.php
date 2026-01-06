@@ -59,6 +59,13 @@ class PesananResource extends Resource
                     ->maxLength(65535)
                     ->requiredIf('metode_pengantaran', 'delivery')
                     ->visible(fn (Forms\Get $get) => $get('metode_pengantaran') === 'delivery')
+                    ->afterStateHydrated(function (Forms\Components\Textarea $component, $state, $record) {
+                        // If editing and no address is set, get from customer profile
+                        if ($record && empty($state) && $record->customer) {
+                            $component->state($record->customer->address);
+                        }
+                    })
+                    ->helperText('Jika kosong, akan menggunakan alamat dari profil customer')
                     ->columnSpanFull(),
 
                 Forms\Components\Repeater::make('detail_pesanans')
