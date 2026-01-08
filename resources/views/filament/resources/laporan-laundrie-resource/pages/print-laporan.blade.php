@@ -1,13 +1,13 @@
 <x-filament-panels::page>
     <div class="print-container" id="printable">
         <!-- Header Laporan -->
-        <div class="mb-6 text-center">
+        <div class="mb-6 text-center border-b-4 border-primary-600 pb-4">
             <!-- Logo -->
             <div class="flex justify-center mb-4">
-                <img src="{{ asset('images/1.jpg') }}" alt="Feastid Logo" class="h-16 w-auto">
+                <img src="{{ asset('images/1.jpg') }}" alt="Feastid Logo" class="h-20 w-auto">
             </div>
-            <h1 class="text-2xl font-bold">LAPORAN LAUNDRY</h1>
-            <p class="text-sm text-gray-600">
+            <h1 class="text-3xl font-bold text-primary-700">LAPORAN LAUNDRY</h1>
+            <p class="text-sm text-gray-600 mt-2">
                 Periode: {{ $record->periode_awal->format('d/m/Y') }} - {{ $record->periode_akhir->format('d/m/Y') }}
             </p>
         </div>
@@ -85,14 +85,22 @@
         </div>
     </div>
 
-    <!-- Print Button -->
-    <div class="mt-6 text-center no-print">
+    <!-- Action Buttons -->
+    <div class="mt-6 flex justify-center gap-4 no-print">
         <x-filament::button
             color="primary"
             icon="heroicon-o-printer"
             onclick="window.print()"
         >
             Cetak Laporan
+        </x-filament::button>
+        
+        <x-filament::button
+            color="success"
+            icon="heroicon-o-arrow-down-tray"
+            wire:click="downloadPdf"
+        >
+            Download PDF
         </x-filament::button>
     </div>
 
