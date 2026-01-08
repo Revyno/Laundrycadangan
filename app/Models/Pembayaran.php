@@ -78,15 +78,11 @@ class Pembayaran extends Model
             $notification->send();
         });
 
-        static::updating(function ($pembayaran) {
-            // Store old status for status change notification
-            $pembayaran->old_status = $pembayaran->getOriginal('status_pembayaran');
-        });
-
         static::updated(function ($pembayaran) {
             // Send notification when payment status changes
-            if ($pembayaran->wasChanged('status_pembayaran') && isset($pembayaran->old_status)) {
-                $notification = new \App\Notifications\PaymentStatusUpdated($pembayaran, $pembayaran->old_status, $pembayaran->status_pembayaran);
+            if ($pembayaran->wasChanged('status_pembayaran')) {
+                $oldStatus = $pembayaran->getOriginal('status_pembayaran');
+                $notification = new \App\Notifications\PaymentStatusUpdated($pembayaran, $oldStatus, $pembayaran->status_pembayaran);
                 $notification->send();
             }
         });

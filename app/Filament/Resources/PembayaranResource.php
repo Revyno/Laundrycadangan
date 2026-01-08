@@ -34,12 +34,26 @@ class PembayaranResource extends Resource
             ->schema([
                 Forms\Components\Select::make('pesanan_id')
                     ->label('Pesanan')
-                    ->relationship('pesanan', 'kode_pesanan')
+                    ->relationship('pesanan', 'kode_pesanan', function ($query) {
+                        return $query->with('customer');
+                    })
+                    ->getOptionLabelFromRecordUsing(function ($record) {
+                        return $record->kode_pesanan . ' - ' . $record->customer->name . ' (Rp ' . number_format($record->total_harga, 0, ',', '.') . ')';
+                    })
                     ->required()
                     ->searchable()
                     ->preload()
                     ->disabled(fn ($context) => $context === 'edit')
-                    ->dehydrated(),
+                    ->dehydrated()
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        if ($state) {
+                            $pesanan = \App\Models\Pesanan::find($state);
+                            if ($pesanan) {
+                                $set('jumlah_dibayar', $pesanan->total_harga);
+                            }
+                        }
+                    }),
 
                 Forms\Components\DatePicker::make('tanggal_pembayaran')
                     ->label('Tanggal Pembayaran')
@@ -51,7 +65,10 @@ class PembayaranResource extends Resource
                     ->numeric()
                     ->prefix('Rp')
                     ->required()
-                    ->minValue(0),
+                    ->minValue(0)
+                    ->disabled()
+                    ->dehydrated()
+                    ->helperText('Jumlah dibayar otomatis diisi berdasarkan total harga pesanan'),
 
                 Forms\Components\Select::make('metode_pembayaran')
                     ->label('Metode Pembayaran')
@@ -77,7 +94,6 @@ class PembayaranResource extends Resource
                     ])
                     ->default('pending')
                     ->required()
-                    ->disabled(fn ($context) => $context === 'create')
                     ->reactive(),
 
                 Forms\Components\FileUpload::make('bukti_pembayaran')
@@ -87,17 +103,24 @@ class PembayaranResource extends Resource
                     ->directory('bukti-pembayaran')
                     ->imageEditor()
                     ->maxSize(5120)
-                    ->helperText('Upload bukti pembayaran (maks 5MB)')
+                    ->disabled()
+                    ->dehydrated()
+                    ->helperText('Bukti pembayaran otomatis diunggah oleh customer')
                     ->columnSpanFull(),
 
                 Forms\Components\TextInput::make('nomor_referensi')
                     ->label('Nomor Referensi')
                     ->maxLength(255)
-                    ->helperText('Nomor referensi transaksi (opsional)'),
+                    ->disabled()
+                    ->dehydrated()
+                    ->helperText('Nomor referensi otomatis diisi oleh sistem'),
 
                 Forms\Components\Textarea::make('catatan')
                     ->label('Catatan')
                     ->maxLength(65535)
+                    ->disabled()
+                    ->dehydrated()
+                    ->helperText('Catatan otomatis diisi oleh customer')
                     ->columnSpanFull(),
 
                 Forms\Components\Hidden::make('user_id')

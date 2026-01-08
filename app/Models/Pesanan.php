@@ -73,15 +73,11 @@ class Pesanan extends Model
             $notification->send();
         });
 
-        static::updating(function ($pesanan) {
-            // Store old status for status change notification
-            $pesanan->old_status = $pesanan->getOriginal('status');
-        });
-
         static::updated(function ($pesanan) {
             // Send notification when order status changes
-            if ($pesanan->wasChanged('status') && isset($pesanan->old_status)) {
-                $notification = new \App\Notifications\OrderStatusUpdated($pesanan, $pesanan->old_status, $pesanan->status);
+            if ($pesanan->wasChanged('status')) {
+                $oldStatus = $pesanan->getOriginal('status');
+                $notification = new \App\Notifications\OrderStatusUpdated($pesanan, $oldStatus, $pesanan->status);
                 $notification->send();
             }
         });

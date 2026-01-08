@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@vite('resources/css/app.css', 'resources/js/app.js')
+
 
 @section('content')
 <x-navbar currentPage="services" />
