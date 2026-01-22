@@ -1,5 +1,4 @@
 @extends('layouts.app')
-{{-- @vite('resources/css/app.css', 'resources/js/app.js') --}}
 
 @section('content')
 <x-navbar currentPage="gallery" />
@@ -19,53 +18,8 @@
                 </p>
             </div>
 
-            <!-- Gallery Grid - Masonry Layout -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/1.jpg') }}" alt="Before Cleaning">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/2.jpg') }}" alt="After Cleaning">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/3.jpg') }}" alt="White Sneakers Before">
-                    </div>
-                </div>
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/4.jpg') }}" alt="After Cleaning">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/5.jpg') }}" alt="Running Shoes Before">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/6.jpg') }}" alt="Kids Shoes After">
-                    </div>
-                </div>
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/7.jpg') }}" alt="Leather Boots Before">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/8.jpg') }}" alt="White Sneakers After">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/9.jpg') }}" alt="Formal Shoes Before">
-                    </div>
-                </div>
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/10.jpg') }}" alt="Running Shoes After">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/11.jpg') }}" alt="Kids Shoes Before">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg hover:scale-105 transition-transform duration-300" src="{{ asset('images/galleries/1.jpg') }}" alt="Formal Shoes After">
-                    </div>
-                </div>
-            </div>
+            <!-- Livewire Gallery Component -->
+            <livewire:gallery />
 
             <!-- Service Categories -->
             {{-- <div class="bg-[#5E5E5E] rounded-lg p-8 mb-16">

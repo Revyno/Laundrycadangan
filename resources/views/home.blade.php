@@ -1,61 +1,102 @@
 @extends('layouts.app')
-{{-- @vite('resources/css/app.css', 'resources/js/app.js') --}}
+
 
 @section('content')
 <x-navbar currentPage="home" />
 
-<!-- Hero Carousel -->
-<div class="relative h-screen overflow-hidden">
-    <div id="default-carousel" class="relative w-full h-full" data-carousel="slide">
-        <!-- Carousel wrapper -->
-        <div class="relative h-full overflow-hidden">
-            <!-- Item 1 -->
-            <div class="duration-700 ease-in-out h-full" data-carousel-item>
-                <img src="{{ asset('images/herocb1.jpg') }}" class="absolute block w-full h-full object-cover" alt="Hero Image">
-                <div class="absolute inset-0 bg-opacity-10 flex items-center justify-center">
-                    <div class="text-center text-white px-4">
-                        <h1 class="text-6xl font-bold mb-4">Faster Cleaning</h1>
-                        <p class="text-xl mb-8">Professional Shoe Cleaning Service</p>
-                        <a href="{{ route('filament.customer.auth.register') }}" class="bg-dark text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#111827] transition duration-300">Get Started</a>
-                    </div>
+
+<!-- Hero Section -->
+<section class="bg-[#0B1320] border-b border-gray-100">
+    <div class="grid max-w-screen-xl px-4 py-8 mx-auto gap-8 lg:py-16 lg:grid-cols-12 items-center">
+        <div class="mr-auto place-self-center lg:col-span-7" data-aos="fade-right">
+            
+            <!-- Trustpilot/Rating Badge -->
+            <div class="flex items-center gap-2 mb-6">
+                <div class="bg-blue-50 text-black px-3 py-1 rounded-md text-sm font-semibold flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    5.0
+                </div>
+                <span class="text-gray-300 font-medium text-sm">Trustes Customer</span>
+            </div>
+
+            <h1 class="max-w-2xl mb-6 text-5xl font-extrabold tracking-tight leading-tight md:text-6xl text-white">
+                A better way to <br> 
+                <span class="text-gray-500 italic">care</span> for your shoes
+            </h1>
+            
+            <p class="max-w-xl mb-8 font-normal text-gray-500 text-lg lg:text-xl leading-relaxed">
+                Expert cleaning service that brings your favorite footwear back to life. From sneakers to leathers, we treat them with the professional care they deserve.
+            </p>
+            
+            <div class="flex flex-col space-y-4 sm:flex-row sm:justify-start sm:space-y-0 sm:space-x-4">
+                <a href="{{ route('filament.customer.auth.register') }}" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-center text-white rounded-full bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 transition-all shadow-lg shadow-gray-600/30">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.03v13m0-13c-2.819-.831-4.715-1.076-8.029-1.023A.99.99 0 0 0 3 6v11c0 .563.466 1.014 1.03 1.007 3.122-.043 5.018.212 7.97 1.023m0-13c2.819-.831 4.715-1.076 8.029-1.023A.99.99 0 0 1 21 6v11c0 .563-.466 1.014-1.03 1.007-3.122-.043-5.018.212-7.97 1.023"/>
+                </svg>
+                <p class="ml-2">Book Now</p>
+                </a>
+            </div>
+
+            <!-- Stats/Tech stack -->
+            <div class="mt-12 flex gap-12 border-t border-gray-100 pt-8">
+                <div>
+                    <h4 class="text-3xl font-bold text-white">100%</h4>
+                    <p class="text-sm text-gray-500 mt-1">Satisfaction Rate</p>
+                </div>
+                 <div>
+                    <h4 class="text-3xl font-bold text-white">2+</h4>
+                    <p class="text-sm text-gray-500 mt-1">Years Experience</p>
+                </div>
+                 <div>
+                    <h4 class="text-3xl font-bold text-white">1K+</h4>
+                    <p class="text-sm text-gray-500 mt-1">Shoes Cleaned</p>
                 </div>
             </div>
-            <!-- Item 2 -->
-            <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-                <img src="{{ asset('images/herocb2.jpg') }}" class="absolute block w-full h-full object-cover" alt="Hero Image 2">
-                <div class="absolute inset-0 b bg-opacity-40 flex items-center justify-center">
-                    <div class="text-center text-white px-4">
-                        <h1 class="text-6xl font-bold mb-4">YOUR SHOES DESERVE THE BEST</h1>
-                        <p class="text-xl mb-8">Expert care for all your favorite footwear</p>
-                        <a href="{{ route('filament.customer.auth.register') }}" class="bg-dark text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#111827] transition duration-300">Book Now</a>
+
+        </div>
+        <div class="hidden lg:mt-6 lg:col-span-5 lg:flex justify-center relative" data-aos="fade-left">
+            <!-- iPhone 12 Mockup -->
+            <div class="relative mx-auto border-gray-900 bg-gray-900 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-2xl">
+                <div class="w-[148px] h-[18px] bg-gray-900 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute z-10"></div>
+                <div class="h-[32px] w-[3px] bg-gray-900 absolute -left-[17px] top-[72px] rounded-l-lg"></div>
+                <div class="h-[46px] w-[3px] bg-gray-900 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
+                <div class="h-[46px] w-[3px] bg-gray-900 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
+                <div class="h-[64px] w-[3px] bg-gray-900 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
+                <div class="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white relative">
+                    <!-- Video Embed -->
+                    <video class="w-full h-full object-cover" autoplay loop muted playsinline controls>
+                        <source src="{{ asset('images/hero1.mp4') }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+            
+            <!-- Floating Cards -->
+             <!-- <div class="absolute -left-12 top-1/2 -translate-y-1/2 bg-white p-4 rounded-2xl shadow-xl z-20 animate-bounce" style="animation-duration: 3s;">
+                <div class="flex items-center gap-3">
+                    <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </div>
+                    <div>
+                        <p class="font-bold text-gray-900">Deep Clean</p>
+                        <p class="text-xs text-gray-500">Professional Process</p>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <!-- Mobile View -->
+        <div class="lg:hidden mt-8 flex justify-center" data-aos="fade-up">
+             <div class="relative mx-auto border-gray-900 bg-gray-900 border-[8px] rounded-[2rem] h-[400px] w-[200px] shadow-xl">
+                <div class="w-[100px] h-[12px] bg-gray-900 top-0 rounded-b-[0.5rem] left-1/2 -translate-x-1/2 absolute z-10"></div>
+                <div class="rounded-[1.5rem] overflow-hidden w-full h-full bg-white">
+                    <video class="w-full h-full object-cover" autoplay loop muted playsinline>
+                        <source src="{{ asset('images/hero1.mp4') }}" type="video/mp4">
+                    </video>
                 </div>
             </div>
         </div>
-        <!-- Slider indicators -->
-        <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-            <button type="button" class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-            <button type="button" class="w-3 h-3 rounded-full bg-white/50 hover:bg-white" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-        </div>
-        <!-- Slider controls -->
-        <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
-                <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-                </svg>
-                <span class="sr-only">Previous</span>
-            </span>
-        </button>
-        <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
-                <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                </svg>
-                <span class="sr-only">Next</span>
-            </span>
-        </button>
     </div>
-</div>
+</section>
 
 <!-- About Section -->
 <section id="about" class="bg-[#5E5E5E] py-16">
@@ -75,7 +116,7 @@
                 </div>
             </div>
             <div class="lg:w-1/2" data-aos="fade-left" data-aos-delay="300">
-                <img src="{{ asset('images/aboutus.jpg') }}" alt="About Us" class="w-full rounded-lg shadow-lg">
+                <img src="{{ asset('images/1.heic') }}" alt="About Us" class="w-full rounded-lg shadow-lg">
             </div>
         </div>
     </div>
@@ -142,7 +183,7 @@
 
             <!-- Fabric -->
             <div class="relative group cursor-pointer" data-aos="fade-up" data-aos-delay="400">
-                <img src="{{ asset('images/fabric.jpg') }}" alt="Fabric" class="w-full h-64 object-cover rounded-lg">
+                <img src="{{ asset('images/vans.heic') }}" alt="Fabric" class="w-full h-64 object-cover rounded-lg">
                 <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center rounded-lg">
                     <h3 class="text-white text-2xl font-bold uppercase">FABRIC</h3>
                 </div>
@@ -150,7 +191,7 @@
 
             <!-- Leather -->
             <div class="relative group cursor-pointer" data-aos="fade-up" data-aos-delay="500">
-                <img src="{{ asset('images/leather.jpg') }}" alt="Leather" class="w-full h-64 object-cover rounded-lg">
+                <img src="{{ asset('images/lather.heic') }}" alt="Leather" class="w-full h-64 object-cover rounded-lg">
                 <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center rounded-lg">
                     <h3 class="text-white text-2xl font-bold uppercase">LEATHER</h3>
                 </div>
@@ -158,7 +199,7 @@
 
             <!-- Suede -->
             <div class="relative group cursor-pointer" data-aos="fade-up" data-aos-delay="600">
-                <img src="{{ asset('images/suede.jpg') }}" alt="Suede" class="w-full h-64 object-cover rounded-lg shadow-lg">
+                <img src="{{ asset('images/3suede.heic') }}" alt="Suede" class="w-full h-64 object-cover rounded-lg shadow-lg">
                 <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center rounded-lg">
                     <h3 class="text-white text-2xl font-bold uppercase">SUEDE</h3>
                 </div>
@@ -180,8 +221,20 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div data-aos="fade-right" data-aos-delay="400">
                     <h3 class="text-2xl font-bold text-gray-800 mb-4">SIDOARJO</h3>
-                    <p class="text-gray-600 mb-6">Feast.id Cuci Sepatu Kilat, Jl. Jatisari 3 No.44, Pepelegi, Kec. Waru, Kabupaten Sidoarjo, Jawa Timur 61256</p>
-                    <p class="text-gray-600 mb-6">Jl. Aryo Bebangah No.54, Dusun Bangah Barat, Bangah, Kec. Gedangan, Kabupaten Sidoarjo, Jawa Timur 61254</p>
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                        </svg>
+                        <p class="text-gray-600 mb-2">Feast.id Cuci Sepatu Kilat, Jl. Jatisari 3 No.44, Pepelegi, Kec. Waru, Kabupaten Sidoarjo, Jawa Timur 61256</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                    </svg>
+                        <p class="text-gray-600 mb -2">Jl. Aryo Bebangah No.54, Dusun Bangah Barat, Bangah, Kec. Gedangan, Kabupaten Sidoarjo, Jawa Timur 61254</p>
+                    </div>
                     <div class="mb-4">
                         <h4 class="font-semibold text-gray-800 mb-2">Jam Operasional:</h4>
                         <ul class="text-gray-600 text-sm space-y-1">
@@ -346,9 +399,10 @@
                 <!-- Step 3: Place Order -->
                 <li class="mb-10 ml-6" data-aos="fade-right" data-aos-delay="600">
                     <span class="absolute flex items-center justify-center w-8 h-8 bg-white rounded-full -left-4 ring-4 ring-[#5E5E5E]">
-                        <svg class="w-3.5 h-3.5 text-[#0B1320]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                     <svg class="w-3.5 h-3.5 text-[#0B1320]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
                             <path d="M17 9a1 1 0 0 0-1 1 6.994 6.994 0 0 1-6.192 6.951A1 1 0 0 0 9 18v1a1 1 0 1 1-2 0v-1a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 0-1-1 6.994 6.994 0 0 1-6.192-6.951A1 1 0 0 0 1 9a1 1 0 1 1 2 0 6.994 6.994 0 0 1 6.192 6.951A1 1 0 0 0 11 15.937V13a3 3 0 0 1 3-3h1a1 1 0 1 1 0 2h-1a1 1 0 0 0-1 1v2.937A1 1 0 0 0 14 16.93a6.994 6.994 0 0 1 3.192-6.951A1 1 0 0 0 17 9Z"/>
                         </svg>
+
                     </span>
                     <div class="bg-white p-6 rounded-lg shadow-sm">
                         <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900">
@@ -450,25 +504,35 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Post 1 -->
             <div class="bg-white rounded-lg overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="300">
-                <img src="{{ asset('images/shoes1.jpg') }}" alt="Post 1" class="w-full h-64 object-cover">
+                <img src="{{asset('images/fresh1.heic')}}" alt="Post 1" class="w-full h-64 object-cover">
                 <div class="p-6">
-                    <p class="text-gray-600">Sepatu aja butuh Self healing, makanya kita kasi deep clean. Biar GK stresss liat Noda 😉🤔</p>
+                    <p class="text-gray-600">Sepatu aja butuh Self healing, makanya kita kasi deep clean. Biar GK stresss liat Noda 😉🤔
+                   Jika sepatu kesayangan mu sudah kotor, bawakan saja pada kami @feasst.id the best Cleaning ‼️
+                   Kami ada di
+                  📍Jl Aryo Bebangah no 54
+                  📍Jl Jatisari 3 no 44 Pepelegi
+                    #cucisepatu #cucisepatusidoarjo #bestcleaning</p>
                 </div>
             </div>
 
             <!-- Post 2 -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="400">
-                <img src="{{ asset('images/shoes2.jpg') }}" alt="Post 2" class="w-full h-64 object-cover">
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg " data-aos="fade-up" data-aos-delay="400">
+                <img src="{{ asset('images/fresh2.heic') }}" alt="Post 2" class="w-full h-64 object-cover">
                 <div class="p-6">
-                    <p class="text-gray-600">Kalau manusia rawat tubuh pakai skincare, kalau sepatu pakai @feast.id shoes care. Biar badan sepatumu tetep glowing ✨"</p>
+                    <p class="text-gray-600">Promo Cuci 3 Gratis 1 Kembali lagi
+Gratis antar jemput daerah Surabaya & Sidoarjo terdekat
+Tunggu apalagi Drop Sepatu Kotor mu sekarang !!
+#discon #cucisepatu #feasstid #cucisepatumurah</p>
                 </div>
             </div>
 
             <!-- Post 3 -->
             <div class="bg-white rounded-lg overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="500">
-                <img src="{{ asset('images/shoes3.jpg') }}" alt="Post 3" class="w-full h-64 object-cover">
+                <img src="{{ asset('images/fresh3.heic') }}" alt="Post 3" class="w-full h-64 object-cover">
                 <div class="p-6">
-                    <p class="text-gray-600">Siap tampil bersih setiap hari nya</p>
+                    <p class="text-gray-600">Kalau manusia rawat tubuh pakai skincare, kalau sepatu pakai @feasst.id shoes care. Biar badan sepatumu tetep glowing ✨”
+#cucisepatu #cucisepatusidoarjo #feasstid
+#cucisepatumurah</p>
                 </div>
             </div>
         </div>

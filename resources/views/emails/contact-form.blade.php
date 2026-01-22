@@ -87,7 +87,7 @@
 
     <div class="footer">
         <p>This email was sent from the Feast.id contact form.</p>
-        <p>&copy; 2025 Feast.id. All rights reserved.</p>
+        <p>&copy; {{ date('Y') }} Feast.id. All rights reserved.</p>
     </div>
 </body>
 </html>
